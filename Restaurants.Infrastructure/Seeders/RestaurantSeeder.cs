@@ -8,14 +8,12 @@ internal class RestaurantSeeder(RestaurantsDbContext dbContext) : IRestaurantSee
     public async Task Seed()
     {
         if (await dbContext.Database.CanConnectAsync())
-        {
             if (!dbContext.Restaurants.Any())
             {
                 var restaurants = GetRestaurants();
                 await dbContext.Restaurants.AddRangeAsync(restaurants);
                 await dbContext.SaveChangesAsync();
             }
-        }
     }
 
     private IEnumerable<Restaurant> GetRestaurants()
@@ -38,8 +36,16 @@ internal class RestaurantSeeder(RestaurantsDbContext dbContext) : IRestaurantSee
                 },
                 Dishes =
                 [
-                    new Dish { Name = "Spaghetti Carbonara", Price = 12.99m, Description = "Pasta with bacon, eggs, and cheese" },
-                    new Dish { Name = "Margherita Pizza", Price = 10.99m, Description = "Pizza with tomato, mozzarella, and basil" }
+                    new Dish
+                    {
+                        Name = "Spaghetti Carbonara", Price = 12.99m,
+                        Description = "Pasta with bacon, eggs, and cheese", KiloCalories = 800
+                    },
+                    new Dish
+                    {
+                        Name = "Margherita Pizza", Price = 10.99m,
+                        Description = "Pizza with tomato, mozzarella, and basil", KiloCalories = 1200
+                    }
                 ]
             },
             new()
@@ -58,8 +64,16 @@ internal class RestaurantSeeder(RestaurantsDbContext dbContext) : IRestaurantSee
                 },
                 Dishes =
                 [
-                    new Dish { Name = "California Roll", Price = 8.99m, Description = "Crab, avocado, and cucumber" },
-                    new Dish { Name = "Spicy Tuna Roll", Price = 9.99m, Description = "Tuna, spicy mayo, and cucumber" }
+                    new Dish
+                    {
+                        Name = "California Roll", Price = 8.99m, Description = "Crab, avocado, and cucumber",
+                        KiloCalories = 600
+                    },
+                    new Dish
+                    {
+                        Name = "Spicy Tuna Roll", Price = 9.99m, Description = "Tuna, spicy mayo, and cucumber",
+                        KiloCalories = 700
+                    }
                 ]
             }
         };
