@@ -1,5 +1,4 @@
 using Microsoft.AspNetCore.Mvc;
-using Restaurants.Application.Exceptions;
 using Restaurants.Application.Restaurants;
 
 namespace Restaurants.API.Controllers;
@@ -18,18 +17,10 @@ public class RestaurantsController(IRestaurantsService restaurantsService) : Con
     [HttpGet("{id}")]
     public async Task<IActionResult> GetById(string id)
     {
-        try
-        {
-            var restaurant = await restaurantsService.GetRestaurantByIdAsync(id);
-            return Ok(restaurant);
-        }
-        catch (NotFoundException ex)
-        {
-            return NotFound(ex.Message);
-        }
-        catch (Exception ex)
-        {
-            return StatusCode(500, ex.Message);
-        }
+        var restaurant = await restaurantsService.GetRestaurantByIdAsync(id);
+
+        if (restaurant == null) return NotFound("This restaurant does not exist");
+
+        return Ok(restaurant);
     }
 }
