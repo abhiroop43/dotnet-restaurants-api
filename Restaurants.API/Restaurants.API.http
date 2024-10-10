@@ -5,6 +5,11 @@ Accept: application/json
 
 ###
 
+GET {{RestaurantsAPI_HostAddress}}/api/restaurants/0000e7b0-2278-40e7-5198-08dce6cfb666
+Accept: application/json
+
+###
+
 POST {{RestaurantsAPI_HostAddress}}/generate
 Content-Type: application/json
 
