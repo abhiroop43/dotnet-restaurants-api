@@ -5,7 +5,7 @@ Accept: application/json
 
 ###
 
-GET {{RestaurantsAPI_HostAddress}}/api/restaurants/0000e7b0-2278-40e7-5198-08dce6cfb666
+GET {{RestaurantsAPI_HostAddress}}/api/restaurants/b007e08e-81c0-44eb-8ba4-437545f603c7
 Accept: application/json
 
 ###
@@ -20,3 +20,16 @@ Content-Type: application/json
 }
 
 ###
+
+POST {{RestaurantsAPI_HostAddress}}/api/restaurants
+Content-Type: application/json
+
+{
+  "Name": "City Wok",
+  "Description": "The world's best Chinese food",
+  "Category": "Chinese",
+  "HasDelivery": true,
+  "City": "South Park",
+  "Street": "Main Street",
+  "PostalCode": "12345"
+}

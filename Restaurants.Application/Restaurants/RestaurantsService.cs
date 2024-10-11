@@ -1,6 +1,8 @@
 using AutoMapper;
 using Microsoft.Extensions.Logging;
+using Newtonsoft.Json;
 using Restaurants.Application.Restaurants.Dtos;
+using Restaurants.Domain.Entities;
 using Restaurants.Domain.Repositories;
 
 namespace Restaurants.Application.Restaurants;
@@ -22,5 +24,15 @@ internal class RestaurantsService(IRestaurantsRepository repository, ILogger<Res
         var restaurant = await repository.GetByIdAsync(id);
 
         return mapper.Map<RestaurantDto?>(restaurant);
+    }
+
+    public async Task<RestaurantDto> CreateRestaurantAsync(RestaurantDto newRestaurant)
+    {
+        logger.LogInformation($"Creating new restaurant: {JsonConvert.SerializeObject(newRestaurant)}");
+        var restaurant = mapper.Map<Restaurant>(newRestaurant);
+
+        restaurant = await repository.CreateAsync(restaurant);
+
+        return mapper.Map<RestaurantDto>(restaurant);
     }
 }
