@@ -33,5 +33,5 @@ Content-Type: application/json
   "ContactNumber": "123-456-7890",
   "City": "South Park",
   "Street": "Main Street",
-  "PostalCode": "12345"
+  "PostalCode": "22-333"
 }

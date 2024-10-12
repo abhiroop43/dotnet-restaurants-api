@@ -30,6 +30,8 @@ public class RestaurantsController(IRestaurantsService restaurantsService) : Con
     {
         try
         {
+            if (!ModelState.IsValid) return BadRequest(ModelState);
+
             var restaurant = await restaurantsService.CreateRestaurantAsync(newRestaurant);
             return CreatedAtAction(nameof(GetById), new { id = restaurant.Id }, restaurant);
         }
