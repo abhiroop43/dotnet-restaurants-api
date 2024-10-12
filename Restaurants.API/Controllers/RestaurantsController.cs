@@ -26,13 +26,12 @@ public class RestaurantsController(IRestaurantsService restaurantsService) : Con
     }
 
     [HttpPost]
-    public async Task<IActionResult> Create([FromBody] RestaurantDto newRestaurant)
+    public async Task<IActionResult> Create([FromBody] CreateRestaurantDto newRestaurant)
     {
         try
         {
             var restaurant = await restaurantsService.CreateRestaurantAsync(newRestaurant);
-
-            return Created(restaurant.Id.ToString(), restaurant);
+            return CreatedAtAction(nameof(GetById), new { id = restaurant.Id }, restaurant);
         }
         catch (Exception ex)
         {

@@ -5,7 +5,7 @@ Accept: application/json
 
 ###
 
-GET {{RestaurantsAPI_HostAddress}}/api/restaurants/b007e08e-81c0-44eb-8ba4-437545f603c7
+GET {{RestaurantsAPI_HostAddress}}/api/restaurants/b3f7f938-a9cb-44ec-808a-2cf3215e3997
 Accept: application/json
 
 ###
@@ -29,6 +29,8 @@ Content-Type: application/json
   "Description": "The world's best Chinese food",
   "Category": "Chinese",
   "HasDelivery": true,
+  "ContactEmail": "bruce.lee@chinese-spy.com",
+  "ContactNumber": "123-456-7890",
   "City": "South Park",
   "Street": "Main Street",
   "PostalCode": "12345"

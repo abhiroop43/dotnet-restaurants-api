@@ -26,13 +26,12 @@ internal class RestaurantsService(IRestaurantsRepository repository, ILogger<Res
         return mapper.Map<RestaurantDto?>(restaurant);
     }
 
-    public async Task<RestaurantDto> CreateRestaurantAsync(RestaurantDto newRestaurant)
+    public async Task<RestaurantDto> CreateRestaurantAsync(CreateRestaurantDto newRestaurant)
     {
         logger.LogInformation($"Creating new restaurant: {JsonConvert.SerializeObject(newRestaurant)}");
         var restaurant = mapper.Map<Restaurant>(newRestaurant);
 
         restaurant = await repository.CreateAsync(restaurant);
-
         return mapper.Map<RestaurantDto>(restaurant);
     }
 }
