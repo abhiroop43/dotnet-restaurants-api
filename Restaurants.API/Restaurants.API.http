@@ -24,3 +24,8 @@ Content-Type: application/json
   "Street": "Main Street",
   "PostalCode": "22-333"
 }
+
+###
+
+DELETE {{RestaurantsAPI_HostAddress}}/api/restaurants/2ce80d73-e95c-4ce5-b952-4863d014aebd
+Accept: application/json

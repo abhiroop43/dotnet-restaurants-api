@@ -28,6 +28,7 @@ internal class RestaurantSeeder(RestaurantsDbContext dbContext) : IRestaurantSee
                 ContactEmail = "nunzio@gourmetkitchen.com",
                 ContactNumber = "123-456-7890",
                 HasDelivery = true,
+                IsActive = true,
                 Address = new Address
                 {
                     Street = "123 Main St",
@@ -39,12 +40,14 @@ internal class RestaurantSeeder(RestaurantsDbContext dbContext) : IRestaurantSee
                     new Dish
                     {
                         Name = "Spaghetti Carbonara", Price = 12.99m,
-                        Description = "Pasta with bacon, eggs, and cheese", KiloCalories = 800
+                        Description = "Pasta with bacon, eggs, and cheese", KiloCalories = 800,
+                        IsActive = true
                     },
                     new Dish
                     {
                         Name = "Margherita Pizza", Price = 10.99m,
-                        Description = "Pizza with tomato, mozzarella, and basil", KiloCalories = 1200
+                        Description = "Pizza with tomato, mozzarella, and basil", KiloCalories = 1200,
+                        IsActive = true
                     }
                 ]
             },
@@ -56,6 +59,7 @@ internal class RestaurantSeeder(RestaurantsDbContext dbContext) : IRestaurantSee
                 ContactEmail = "banzai@sushiworld.co.jp",
                 ContactNumber = "987-654-3210",
                 HasDelivery = true,
+                IsActive = true,
                 Address = new Address
                 {
                     Street = "456 Elm St",
@@ -67,12 +71,14 @@ internal class RestaurantSeeder(RestaurantsDbContext dbContext) : IRestaurantSee
                     new Dish
                     {
                         Name = "California Roll", Price = 8.99m, Description = "Crab, avocado, and cucumber",
-                        KiloCalories = 600
+                        KiloCalories = 600,
+                        IsActive = true
                     },
                     new Dish
                     {
                         Name = "Spicy Tuna Roll", Price = 9.99m, Description = "Tuna, spicy mayo, and cucumber",
-                        KiloCalories = 700
+                        KiloCalories = 700,
+                        IsActive = true
                     }
                 ]
             }

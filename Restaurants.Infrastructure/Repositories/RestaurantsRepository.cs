@@ -10,6 +10,7 @@ internal class RestaurantsRepository(RestaurantsDbContext dbContext) : IRestaura
     public async Task<IEnumerable<Restaurant>> GetAllAsync()
     {
         return await dbContext.Restaurants
+            .Where(r => r.IsActive)
             // .Include(r => r.Dishes)
             .ToListAsync();
     }
@@ -18,7 +19,8 @@ internal class RestaurantsRepository(RestaurantsDbContext dbContext) : IRestaura
     {
         // var guid = Guid.Parse(id);
         return await dbContext.Restaurants
-            .Include(r => r.Dishes)
+            .Where(r => r.IsActive)
+            .Include(r => r.Dishes.Where(d => d.IsActive))
             .FirstOrDefaultAsync(r => r.Id == id);
     }
 
@@ -33,5 +35,23 @@ internal class RestaurantsRepository(RestaurantsDbContext dbContext) : IRestaura
         if (success > 0) return restaurant;
 
         throw new Exception("Failed to create restaurant");
+    }
+
+    public async Task<bool> DeleteAsync(Guid id)
+    {
+        var restaurant = await dbContext.Restaurants
+            .Include(restaurant => restaurant.Dishes)
+            .FirstOrDefaultAsync(r => r.Id == id);
+
+        if (restaurant == null) return false;
+
+        restaurant.IsActive = false;
+        restaurant.Dishes
+            .ForEach(d => d.IsActive = false);
+
+        dbContext.Entry(restaurant).State = EntityState.Modified;
+        var savedRows = await dbContext.SaveChangesAsync();
+
+        return savedRows > 0;
     }
 }

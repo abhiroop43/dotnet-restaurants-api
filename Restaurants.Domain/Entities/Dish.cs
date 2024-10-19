@@ -9,4 +9,5 @@ public class Dish
     public int? KiloCalories { get; set; }
 
     public Guid RestaurantId { get; set; }
+    public required bool IsActive { get; set; } = true;
 }
