@@ -5,19 +5,8 @@ Accept: application/json
 
 ###
 
-GET {{RestaurantsAPI_HostAddress}}/api/restaurants/b3f7f938-a9cb-44ec-808a-2cf3215e3997
+GET {{RestaurantsAPI_HostAddress}}/api/restaurants/423156fb-a4b1-46d2-605d-08dce7093456
 Accept: application/json
-
-###
-
-POST {{RestaurantsAPI_HostAddress}}/generate
-Content-Type: application/json
-
-{
-  "ResultsCount": 3,
-  "MinTemp": -50,
-  "MaxTemp": 20
-}
 
 ###
 

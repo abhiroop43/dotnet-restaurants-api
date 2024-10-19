@@ -6,6 +6,6 @@ public interface IRestaurantsRepository
 {
     Task<IEnumerable<Restaurant>> GetAllAsync();
 
-    Task<Restaurant?> GetByIdAsync(string id);
+    Task<Restaurant?> GetByIdAsync(Guid id);
     Task<Restaurant> CreateAsync(Restaurant restaurant);
 }

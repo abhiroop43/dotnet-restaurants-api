@@ -1,24 +1,26 @@
+using MediatR;
 using Microsoft.AspNetCore.Mvc;
-using Restaurants.Application.Restaurants;
-using Restaurants.Application.Restaurants.Dtos;
+using Restaurants.Application.Restaurants.Commands.CreateRestaurant;
+using Restaurants.Application.Restaurants.Queries.GetAllRestaurants;
+using Restaurants.Application.Restaurants.Queries.GetRestaurantById;
 
 namespace Restaurants.API.Controllers;
 
 [ApiController]
 [Route("api/restaurants")]
-public class RestaurantsController(IRestaurantsService restaurantsService) : ControllerBase
+public class RestaurantsController(IMediator mediator) : ControllerBase
 {
     [HttpGet]
     public async Task<IActionResult> GetAll()
     {
-        var restaurants = await restaurantsService.GetAllRestaurantsAsync();
+        var restaurants = await mediator.Send(new GetAllRestaurantsQuery());
         return Ok(restaurants);
     }
 
     [HttpGet("{id}")]
-    public async Task<IActionResult> GetById(string id)
+    public async Task<IActionResult> GetById([FromRoute] Guid id)
     {
-        var restaurant = await restaurantsService.GetRestaurantByIdAsync(id);
+        var restaurant = await mediator.Send(new GetResturantByIdQuery(id));
 
         if (restaurant == null) return NotFound("This restaurant does not exist");
 
@@ -26,14 +28,14 @@ public class RestaurantsController(IRestaurantsService restaurantsService) : Con
     }
 
     [HttpPost]
-    public async Task<IActionResult> Create([FromBody] CreateRestaurantDto newRestaurant)
+    public async Task<IActionResult> Create([FromBody] CreateRestaurantCommand command)
     {
         try
         {
-            if (!ModelState.IsValid) return BadRequest(ModelState);
+            // if (!ModelState.IsValid) return BadRequest(ModelState);
 
-            var restaurant = await restaurantsService.CreateRestaurantAsync(newRestaurant);
-            return CreatedAtAction(nameof(GetById), new { id = restaurant.Id }, restaurant);
+            var restaurantId = await mediator.Send(command);
+            return CreatedAtAction(nameof(GetById), new { id = restaurantId }, restaurantId);
         }
         catch (Exception ex)
         {
