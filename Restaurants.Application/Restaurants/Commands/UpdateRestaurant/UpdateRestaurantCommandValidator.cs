@@ -6,6 +6,9 @@ public class UpdateRestaurantCommandValidator : AbstractValidator<UpdateRestaura
 {
     public UpdateRestaurantCommandValidator()
     {
+        RuleFor(dto => dto.Id)
+            .NotEmpty();
+
         RuleFor(dto => dto.Name)
             .NotEmpty()
             .Length(3, 100);
