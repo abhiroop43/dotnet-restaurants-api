@@ -29,3 +29,15 @@ Content-Type: application/json
 
 DELETE {{RestaurantsAPI_HostAddress}}/api/restaurants/2ce80d73-e95c-4ce5-b952-4863d014aebd
 Accept: application/json
+
+###
+
+PATCH {{RestaurantsAPI_HostAddress}}/api/restaurants
+Content-Type: application/json
+
+{
+  "id": "2baf1d85-f316-46b0-8944-1831dd0464cc",
+  "name": "City Sushi",
+  "description": "The most authentic Japanese cuisine in the region",
+  "hasDelivery": false
+}

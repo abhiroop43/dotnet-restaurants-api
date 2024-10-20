@@ -28,7 +28,6 @@ internal class RestaurantsRepository(RestaurantsDbContext dbContext) : IRestaura
     {
         var id = Guid.NewGuid();
         restaurant.Id = id;
-        // restaurant.Dishes.ForEach(d => d.Id = Guid.NewGuid());
         await dbContext.Restaurants.AddAsync(restaurant);
         var success = await dbContext.SaveChangesAsync();
 
@@ -49,6 +48,14 @@ internal class RestaurantsRepository(RestaurantsDbContext dbContext) : IRestaura
         restaurant.Dishes
             .ForEach(d => d.IsActive = false);
 
+        dbContext.Entry(restaurant).State = EntityState.Modified;
+        var savedRows = await dbContext.SaveChangesAsync();
+
+        return savedRows > 0;
+    }
+
+    public async Task<bool> UpdateAsync(Restaurant restaurant)
+    {
         dbContext.Entry(restaurant).State = EntityState.Modified;
         var savedRows = await dbContext.SaveChangesAsync();
 
