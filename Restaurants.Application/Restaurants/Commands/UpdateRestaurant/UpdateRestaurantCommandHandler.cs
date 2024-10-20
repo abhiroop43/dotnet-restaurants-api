@@ -16,12 +16,14 @@ public class UpdateRestaurantCommandHandler(
         var restaurant = await repository.GetByIdAsync(request.Id);
 
         if (restaurant == null) return false;
-        restaurant.Name = request.Name;
-        restaurant.Description = request.Description;
-        restaurant.HasDelivery = request.HasDelivery ?? false;
 
-        var success = await repository.UpdateAsync(restaurant);
+        mapper.Map(request, restaurant);
+        // restaurant.Name = request.Name;
+        // restaurant.Description = request.Description;
+        // restaurant.HasDelivery = request.HasDelivery ?? false;
 
-        return success;
+        await repository.SaveChangesAsync();
+
+        return true;
     }
 }

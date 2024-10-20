@@ -14,15 +14,15 @@ POST {{RestaurantsAPI_HostAddress}}/api/restaurants
 Content-Type: application/json
 
 {
-  "Name": "City Wok",
-  "Description": "The world's best Chinese food",
-  "Category": "Chinese",
-  "HasDelivery": true,
-  "ContactEmail": "bruce.lee@chinese-spy.com",
-  "ContactNumber": "123-456-7890",
-  "City": "South Park",
-  "Street": "Main Street",
-  "PostalCode": "22-333"
+  "name": "City Wok",
+  "description": "The world's best Chinese food",
+  "category": "Chinese",
+  "hasDelivery": true,
+  "contactEmail": "bruce.lee@chinese-spy.com",
+  "contactNumber": "123-456-7890",
+  "city": "South Park",
+  "street": "Main Street",
+  "postalCode": "22-333"
 }
 
 ###
@@ -37,7 +37,7 @@ Content-Type: application/json
 
 {
   "id": "2baf1d85-f316-46b0-8944-1831dd0464cc",
-  "name": "City Sushi",
+  "name": "City Sushi 1",
   "description": "The most authentic Japanese cuisine in the region",
-  "hasDelivery": false
+  "hasDelivery": true
 }
