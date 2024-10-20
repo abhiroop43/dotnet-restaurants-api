@@ -20,6 +20,9 @@ nupkg/
 # Code Rush
 .cr/
 
+# Application Logs
+Logs/
+
 # User-specific files
 *.suo
 *.user
