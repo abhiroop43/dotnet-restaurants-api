@@ -7,9 +7,10 @@ public interface IRestaurantsRepository
     Task<IEnumerable<Restaurant>> GetAllAsync();
 
     Task<Restaurant?> GetByIdAsync(Guid id);
+
     Task<Restaurant> CreateAsync(Restaurant restaurant);
-    Task<bool> DeleteAsync(Guid id);
-    Task<bool> UpdateAsync(Restaurant restaurant);
+    // bool Delete(Restaurant restaurant);
+    // bool Update(Restaurant restaurant);
 
     Task<int> SaveChangesAsync();
 }

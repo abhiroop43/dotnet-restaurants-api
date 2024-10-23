@@ -36,34 +36,24 @@ internal class RestaurantsRepository(RestaurantsDbContext dbContext) : IRestaura
         throw new Exception("Failed to create restaurant");
     }
 
-    public async Task<bool> DeleteAsync(Guid id)
-    {
-        var restaurant = await dbContext.Restaurants
-            .Include(restaurant => restaurant.Dishes)
-            .FirstOrDefaultAsync(r => r.Id == id);
-
-        if (restaurant == null) return false;
-
-        restaurant.IsActive = false;
-        restaurant.Dishes
-            .ForEach(d => d.IsActive = false);
-
-        dbContext.Entry(restaurant).State = EntityState.Modified;
-        var savedRows = await dbContext.SaveChangesAsync();
-
-        return savedRows > 0;
-    }
-
-    public async Task<bool> UpdateAsync(Restaurant restaurant)
-    {
-        dbContext.Entry(restaurant).State = EntityState.Modified;
-        var savedRows = await dbContext.SaveChangesAsync();
-
-        return savedRows > 0;
-    }
-
     public async Task<int> SaveChangesAsync()
     {
         return await dbContext.SaveChangesAsync();
     }
+
+    // public bool Delete(Restaurant restaurant)
+    // {
+    //     restaurant.IsActive = false;
+    //     restaurant.Dishes
+    //         .ForEach(d => d.IsActive = false);
+    //
+    //     dbContext.Entry(restaurant).State = EntityState.Modified;
+    //     return true;
+    // }
+    //
+    // public bool Update(Restaurant restaurant)
+    // {
+    //     dbContext.Entry(restaurant).State = EntityState.Modified;
+    //     return true;
+    // }
 }
