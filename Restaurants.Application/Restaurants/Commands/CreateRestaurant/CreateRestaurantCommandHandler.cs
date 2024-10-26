@@ -17,6 +17,10 @@ public class CreateRestaurantCommandHandler(
         var restaurant = mapper.Map<Restaurant>(request);
 
         restaurant = await repository.CreateAsync(restaurant);
+        var success = await repository.SaveChangesAsync();
+
+        if (success <= 0) throw new Exception("Failed to create new restaurant");
+        
         return restaurant.Id;
     }
 }

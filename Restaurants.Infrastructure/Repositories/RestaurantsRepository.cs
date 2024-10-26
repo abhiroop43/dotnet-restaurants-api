@@ -29,31 +29,11 @@ internal class RestaurantsRepository(RestaurantsDbContext dbContext) : IRestaura
         var id = Guid.NewGuid();
         restaurant.Id = id;
         await dbContext.Restaurants.AddAsync(restaurant);
-        var success = await dbContext.SaveChangesAsync();
-
-        if (success > 0) return restaurant;
-
-        throw new Exception("Failed to create restaurant");
+        return restaurant;
     }
 
     public async Task<int> SaveChangesAsync()
     {
         return await dbContext.SaveChangesAsync();
     }
-
-    // public bool Delete(Restaurant restaurant)
-    // {
-    //     restaurant.IsActive = false;
-    //     restaurant.Dishes
-    //         .ForEach(d => d.IsActive = false);
-    //
-    //     dbContext.Entry(restaurant).State = EntityState.Modified;
-    //     return true;
-    // }
-    //
-    // public bool Update(Restaurant restaurant)
-    // {
-    //     dbContext.Entry(restaurant).State = EntityState.Modified;
-    //     return true;
-    // }
 }
