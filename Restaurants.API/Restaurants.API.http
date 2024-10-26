@@ -41,3 +41,10 @@ Content-Type: application/json
   "description": "The most authentic Japanese cuisine in the region",
   "hasDelivery": true
 }
+
+###
+
+GET {{RestaurantsAPI_HostAddress}}/api/restaurants/3af987b0-e8ca-4293-ebc5-08dcea06ac45/dishes
+Accept: application/json
+
+###

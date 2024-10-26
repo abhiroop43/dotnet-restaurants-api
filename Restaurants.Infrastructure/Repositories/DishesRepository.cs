@@ -11,7 +11,7 @@ internal class DishesRepository(RestaurantsDbContext dbContext) : IDishesReposit
     {
         return await dbContext
             .Dishes
-            .Where(d => d.RestaurantId == restaurantId 
+            .Where(d => d.RestaurantId == restaurantId
                         && d.IsActive)
             .ToListAsync();
     }
@@ -20,8 +20,8 @@ internal class DishesRepository(RestaurantsDbContext dbContext) : IDishesReposit
     {
         return await dbContext
             .Dishes
-            .Where(d => d.RestaurantId == restaurantId 
-                        && d.Id == dishId 
+            .Where(d => d.RestaurantId == restaurantId
+                        && d.Id == dishId
                         && d.IsActive)
             .FirstOrDefaultAsync();
     }
@@ -36,6 +36,6 @@ internal class DishesRepository(RestaurantsDbContext dbContext) : IDishesReposit
 
     public async Task<int> SaveChangesAsync()
     {
-        throw new NotImplementedException();
+        return await dbContext.SaveChangesAsync();
     }
 }
