@@ -1,6 +1,7 @@
 using MediatR;
 using Microsoft.AspNetCore.Mvc;
 using Restaurants.Application.Dishes.Queries.GetAllDishesForRestaurant;
+using Restaurants.Application.Dishes.Queries.GetDishById;
 
 namespace Restaurants.API.Controllers;
 
@@ -18,7 +19,8 @@ public class DishesController(IMediator mediator) : ControllerBase
     [HttpGet("{dishId}")]
     public async Task<IActionResult> GetDishById([FromRoute] Guid restaurantId, [FromRoute] Guid dishId)
     {
-        return Ok();
+        var dish = await mediator.Send(new GetDishByIdQuery(restaurantId, dishId));
+        return Ok(dish);
     }
 
     [HttpPost("")]

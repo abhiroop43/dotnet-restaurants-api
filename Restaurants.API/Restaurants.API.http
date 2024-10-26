@@ -48,3 +48,8 @@ GET {{RestaurantsAPI_HostAddress}}/api/restaurants/3af987b0-e8ca-4293-ebc5-08dce
 Accept: application/json
 
 ###
+
+GET {{RestaurantsAPI_HostAddress}}/api/restaurants/3af987b0-e8ca-4293-ebc5-08dcea06ac45/dishes/c4c23fee-61d9-418d-ad02-08dcea06ac4d
+Accept: application/json
+
+###
