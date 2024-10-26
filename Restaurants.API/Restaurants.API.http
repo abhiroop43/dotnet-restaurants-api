@@ -44,12 +44,25 @@ Content-Type: application/json
 
 ###
 
-GET {{RestaurantsAPI_HostAddress}}/api/restaurants/3af987b0-e8ca-4293-ebc5-08dcea06ac45/dishes
+GET {{RestaurantsAPI_HostAddress}}/api/restaurants/fce7262b-74b7-424e-ac7c-7e340c923f26/dishes
 Accept: application/json
 
 ###
 
 GET {{RestaurantsAPI_HostAddress}}/api/restaurants/3af987b0-e8ca-4293-ebc5-08dcea06ac45/dishes/c4c23fee-61d9-418d-ad02-08dcea06ac4d
 Accept: application/json
+
+###
+
+POST {{RestaurantsAPI_HostAddress}}/api/restaurants/fce7262b-74b7-424e-ac7c-7e340c923f26/dishes
+Content-Type: application/json
+
+{
+  "restaurantId": "fce7262b-74b7-424e-ac7c-7e340c923f26",
+  "name": "Chicken Kadai",
+  "description": "A spicy chicken delicacy",
+  "price": 24.99,
+  "kiloCalories": 520
+}
 
 ###

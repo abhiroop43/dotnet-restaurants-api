@@ -10,5 +10,7 @@ public interface IDishesRepository
 
     Task<Dish> CreateAsync(Dish dish);
 
+    Task<bool> CheckIfDishExistsAndIsActive(Guid restaurantId, string dishName);
+
     Task<int> SaveChangesAsync();
 }

@@ -1,11 +1,12 @@
 using MediatR;
 using Microsoft.AspNetCore.Mvc;
+using Restaurants.Application.Dishes.Commands.CreateDish;
 using Restaurants.Application.Dishes.Queries.GetAllDishesForRestaurant;
 using Restaurants.Application.Dishes.Queries.GetDishById;
 
 namespace Restaurants.API.Controllers;
 
-[Route("api/restaurants/{restaurantId}/dishes")]
+[Route("api/restaurants/{restaurantId:guid}/dishes")]
 [ApiController]
 public class DishesController(IMediator mediator) : ControllerBase
 {
@@ -16,7 +17,7 @@ public class DishesController(IMediator mediator) : ControllerBase
         return Ok(dishes);
     }
 
-    [HttpGet("{dishId}")]
+    [HttpGet("{dishId:guid}")]
     public async Task<IActionResult> GetDishById([FromRoute] Guid restaurantId, [FromRoute] Guid dishId)
     {
         var dish = await mediator.Send(new GetDishByIdQuery(restaurantId, dishId));
@@ -24,9 +25,11 @@ public class DishesController(IMediator mediator) : ControllerBase
     }
 
     [HttpPost("")]
-    public async Task<IActionResult> AddNewDish([FromRoute] Guid restaurantId)
+    public async Task<IActionResult> AddNewDish([FromRoute] Guid restaurantId, [FromBody] CreateDishCommand command)
     {
-        return Created();
+        command.RestaurantId = restaurantId;
+        var dishId = await mediator.Send(command);
+        return CreatedAtAction(nameof(GetDishById), new { restaurantId, dishId }, null);
     }
 
     [HttpPatch("")]
@@ -35,7 +38,7 @@ public class DishesController(IMediator mediator) : ControllerBase
         return NoContent();
     }
 
-    [HttpDelete("{dishId}")]
+    [HttpDelete("{dishId:guid}")]
     public async Task<IActionResult> DeleteDish([FromRoute] Guid restaurantId, [FromRoute] Guid dishId)
     {
         return NoContent();

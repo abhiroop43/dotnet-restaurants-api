@@ -34,6 +34,15 @@ internal class DishesRepository(RestaurantsDbContext dbContext) : IDishesReposit
         return dish;
     }
 
+    public async Task<bool> CheckIfDishExistsAndIsActive(Guid restaurantId, string dishName)
+    {
+        var dish = await dbContext.Dishes.FirstOrDefaultAsync(d =>
+            d.IsActive && d.RestaurantId == restaurantId &&
+            d.Name.ToUpper() == dishName.ToUpper());
+
+        return dish != null;
+    }
+
     public async Task<int> SaveChangesAsync()
     {
         return await dbContext.SaveChangesAsync();
