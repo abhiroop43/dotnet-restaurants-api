@@ -16,7 +16,7 @@ public class GetDishByIdQueryHandler(
 {
     public async Task<DishDto> Handle(GetDishByIdQuery request, CancellationToken cancellationToken)
     {
-        logger.LogInformation("Fetching dish {@DishId} for restaurant {@RestaurantId}", request.DishId,
+        logger.LogInformation("Fetching dish {@Id} for restaurant {@RestaurantId}", request.DishId,
             request.RestaurantId);
 
         var restaurant = await restaurantsRepository.GetByIdAsync(request.RestaurantId);

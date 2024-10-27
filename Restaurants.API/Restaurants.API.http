@@ -44,7 +44,7 @@ Content-Type: application/json
 
 ###
 
-GET {{RestaurantsAPI_HostAddress}}/api/restaurants/fce7262b-74b7-424e-ac7c-7e340c923f26/dishes
+GET {{RestaurantsAPI_HostAddress}}/api/restaurants/54a3718d-9cb5-48e1-81f3-c29673125bcb/dishes
 Accept: application/json
 
 ###
@@ -54,11 +54,10 @@ Accept: application/json
 
 ###
 
-POST {{RestaurantsAPI_HostAddress}}/api/restaurants/fce7262b-74b7-424e-ac7c-7e340c923f26/dishes
+POST {{RestaurantsAPI_HostAddress}}/api/restaurants/54a3718d-9cb5-48e1-81f3-c29673125bcb/dishes
 Content-Type: application/json
 
 {
-  "restaurantId": "fce7262b-74b7-424e-ac7c-7e340c923f26",
   "name": "Chicken Kadai",
   "description": "A spicy chicken delicacy",
   "price": 24.99,
@@ -66,3 +65,14 @@ Content-Type: application/json
 }
 
 ###
+
+PATCH {{RestaurantsAPI_HostAddress}}/api/restaurants/54a3718d-9cb5-48e1-81f3-c29673125bcb/dishes/
+Content-Type: application/json
+
+{
+  "id": "AAFCCE92-4E96-48F8-A1C8-0C92C344241F",
+  "name": "Chicken Kadai",
+  "description": "Yet another disgusting indian dish with low nutritional value and high calories",
+  "price": 49.99,
+  "kiloCalories": 600
+}

@@ -40,7 +40,7 @@ public class RestaurantsController(IMediator mediator) : ControllerBase
 
     [HttpPatch]
     [ProducesResponseType(StatusCodes.Status204NoContent)]
-    [ProducesResponseType(StatusCodes.Status404NotFound)]
+    [ProducesResponseType(StatusCodes.Status404NotFound, Type = typeof(string))]
     public async Task<IActionResult> Update([FromBody] UpdateRestaurantCommand command)
     {
         await mediator.Send(command);
@@ -49,7 +49,7 @@ public class RestaurantsController(IMediator mediator) : ControllerBase
 
     [HttpDelete("{id}")]
     [ProducesResponseType(StatusCodes.Status204NoContent)]
-    [ProducesResponseType(StatusCodes.Status404NotFound)]
+    [ProducesResponseType(StatusCodes.Status404NotFound, Type = typeof(string))]
     public async Task<IActionResult> Delete([FromRoute] Guid id)
     {
         await mediator.Send(new DeleteRestaurantCommand(id));
