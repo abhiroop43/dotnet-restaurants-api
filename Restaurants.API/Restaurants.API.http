@@ -76,3 +76,10 @@ Content-Type: application/json
   "price": 49.99,
   "kiloCalories": 600
 }
+
+###
+
+DELETE {{RestaurantsAPI_HostAddress}}/api/restaurants/54a3718d-9cb5-48e1-81f3-c29673125bcb/dishes/aafcce92-4e96-48f8-a1c8-0c92c344241f
+Accept: application/json
+
+###

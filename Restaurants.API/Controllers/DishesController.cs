@@ -1,6 +1,7 @@
 using MediatR;
 using Microsoft.AspNetCore.Mvc;
 using Restaurants.Application.Dishes.Commands.CreateDish;
+using Restaurants.Application.Dishes.Commands.DeleteDish;
 using Restaurants.Application.Dishes.Commands.UpdateDish;
 using Restaurants.Application.Dishes.Dtos;
 using Restaurants.Application.Dishes.Queries.GetAllDishesForRestaurant;
@@ -62,6 +63,7 @@ public class DishesController(IMediator mediator) : ControllerBase
     [ProducesResponseType(StatusCodes.Status500InternalServerError, Type = typeof(string))]
     public async Task<IActionResult> DeleteDish([FromRoute] Guid restaurantId, [FromRoute] Guid dishId)
     {
+        await mediator.Send(new DeleteDishCommand(dishId, restaurantId));
         return NoContent();
     }
 }
