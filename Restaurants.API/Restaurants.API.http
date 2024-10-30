@@ -1,12 +1,15 @@
 @RestaurantsAPI_HostAddress = http://localhost:5293
+@token = CfDJ8Orz0xJooX9Gs0tdWTa0mcxzQoFstV7_zPJwSjlE0WHJf-AMuTgFfm_LhY0gVIxaj7VrTvHATHAUbrKSX7cp9gyGk1CRtH1eGBxv1I8AQr3OEMnDEiTSdPQC5h0aitm1DO4fwlrQnrZglDuTYblh5bvF3gnwc_krhpgSm3sruN0yWhyhtF9iJH5o-lZjgc0iCzV-2HuUicZOYU1TrIv9v0BaInauAos9RTk2fzgDmnuaKdS4qKPC6QvUgy47_6zsLLS9RW3rNR-CJGytYpH35veF18G4KyQVH4CIW1aq6AgmE_HGgRsWOdtB_TP8n4Oo0U-w4VSnohyPGIQpGxLYY3cR8CaYQiiiyOS9tkxn0YD4kSozPgjD27OgMGsfDc8iDKq9SFlcq56m8cVf3m-D_jONLA1kf3EEeDubxAVG941MnW1u31vvDLFU5LBSgQ6fSQpNgaUlySo12BaFQObpOTadcZ8IZZXEjwQfKXznYbtJsMFrhoFRO10rlQvUm1gQY7iJp9zT7uL9iILOgWDngZ8uZkigkVKKN5LbgZxJA8sMdrUMltPgBinpfChiDMlO6VfP48_PaCiFC54B0m9hEfhSUFFkap5Ns3KFI1USU3qljacZV7_SyPRH4bR5mCEFXlxtaWkpK19P5kdth6E_TvuhFNqmQ76Hhl1w6H-F-ubskSkiRgI672B1X2qRIt7qXIenGh1wUHy1aBD6BL1aBSs
 
 GET {{RestaurantsAPI_HostAddress}}/api/restaurants
 Accept: application/json
+#Authorization: Bearer {{token}}
 
 ###
 
-GET {{RestaurantsAPI_HostAddress}}/api/restaurants/97ca1637-93ea-4b1c-85dd-91e2a253fa3d
+GET {{RestaurantsAPI_HostAddress}}/api/restaurants/3af987b0-e8ca-4293-ebc5-08dcea06ac45
 Accept: application/json
+Authorization: Bearer {{token}}
 
 ###
 
@@ -84,7 +87,7 @@ Accept: application/json
 
 ###
 
-POST {{RestaurantsAPI_HostAddress}}/register
+POST {{RestaurantsAPI_HostAddress}}/api/identity/register
 Content-Type: application/json
 
 {
@@ -94,7 +97,7 @@ Content-Type: application/json
 
 ###
 
-POST {{RestaurantsAPI_HostAddress}}/login
+POST {{RestaurantsAPI_HostAddress}}/api/identity/login
 Content-Type: application/json
 
 {
