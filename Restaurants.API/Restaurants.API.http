@@ -83,3 +83,21 @@ DELETE {{RestaurantsAPI_HostAddress}}/api/restaurants/54a3718d-9cb5-48e1-81f3-c2
 Accept: application/json
 
 ###
+
+POST {{RestaurantsAPI_HostAddress}}/register
+Content-Type: application/json
+
+{
+  "email": "jane.doe@example.com",
+  "password": "Hello@1234"
+}
+
+###
+
+POST {{RestaurantsAPI_HostAddress}}/login
+Content-Type: application/json
+
+{
+  "email": "john.doe@example.com",
+  "password": "Hello@1234"
+}
