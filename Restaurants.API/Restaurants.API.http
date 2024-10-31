@@ -1,5 +1,5 @@
 @RestaurantsAPI_HostAddress = http://localhost:5293
-@token = CfDJ8Orz0xJooX9Gs0tdWTa0mcxzQoFstV7_zPJwSjlE0WHJf-AMuTgFfm_LhY0gVIxaj7VrTvHATHAUbrKSX7cp9gyGk1CRtH1eGBxv1I8AQr3OEMnDEiTSdPQC5h0aitm1DO4fwlrQnrZglDuTYblh5bvF3gnwc_krhpgSm3sruN0yWhyhtF9iJH5o-lZjgc0iCzV-2HuUicZOYU1TrIv9v0BaInauAos9RTk2fzgDmnuaKdS4qKPC6QvUgy47_6zsLLS9RW3rNR-CJGytYpH35veF18G4KyQVH4CIW1aq6AgmE_HGgRsWOdtB_TP8n4Oo0U-w4VSnohyPGIQpGxLYY3cR8CaYQiiiyOS9tkxn0YD4kSozPgjD27OgMGsfDc8iDKq9SFlcq56m8cVf3m-D_jONLA1kf3EEeDubxAVG941MnW1u31vvDLFU5LBSgQ6fSQpNgaUlySo12BaFQObpOTadcZ8IZZXEjwQfKXznYbtJsMFrhoFRO10rlQvUm1gQY7iJp9zT7uL9iILOgWDngZ8uZkigkVKKN5LbgZxJA8sMdrUMltPgBinpfChiDMlO6VfP48_PaCiFC54B0m9hEfhSUFFkap5Ns3KFI1USU3qljacZV7_SyPRH4bR5mCEFXlxtaWkpK19P5kdth6E_TvuhFNqmQ76Hhl1w6H-F-ubskSkiRgI672B1X2qRIt7qXIenGh1wUHy1aBD6BL1aBSs
+@token = CfDJ8Ib2g0MYGkJMtazJcRgLALFYe08y9oLogqSdUgoPc5LCFBEA-FgA0v1fzm8jZwBsW6_i1Y1OTvQgTZAuqdt9RnmF86skgcqlwYl7mEs4PLp4bIzGrCvkUGqoCa80SMvX1XBPXylMsLz_DobcNOW-NGGbDXp-UAKuk_AZBBRQmrFL_wWTkaitqIB3_nayb_UTEvddh4ZspZ1wec02pSHN-JX1noITECxRLLwyGuDByAsvLavkftje9RY2LaGk-3JaQs-gkwlNxMTuVI-JGIY5HTctgr0NmnT15muy1QkG-cqz7jNH4jYEi8NSqJm-lz7iDAEP_eHdzc1HyeXlGi8xxZzMIP_2GM9XHnGYbIo06TnQQU4wDOElE6PsatDvPe3pj_4RCY3cMOk6Q-kXT_lfFIlnoUotN4WCq4MmffijZoQMs2KrW9PZ9h07LxVbTdFxWPHTZYfxXYL6Xolf-fgImIHrOCZnmSLQywMZxwCmfrq5sYOf0VUrtPQyBvSOxT1nta2zzO-bdYlTnQK31Uc9u0xBNM6B2V9WJJB-TIjfqCDG55UaW11mrXq6bmFVYThQp0FQyBNzqzht4jFjo9tIk8FO7K59Qmkl5VFBQwrghN1O34BvCbeHrs0p4JpT9KzlzUxuOrLR01Q90cgsIHqVx8jG4TgfMwQSztZudrsQdCnH4i6sElBTtrq2qVXxP8ll-TotCQmZxqlXnhciAmlIhsY
 
 GET {{RestaurantsAPI_HostAddress}}/api/restaurants
 Accept: application/json
@@ -91,7 +91,7 @@ POST {{RestaurantsAPI_HostAddress}}/api/identity/register
 Content-Type: application/json
 
 {
-  "email": "jane.doe@example.com",
+  "email": "john.doe@example.com",
   "password": "Hello@1234"
 }
 
@@ -103,4 +103,15 @@ Content-Type: application/json
 {
   "email": "john.doe@example.com",
   "password": "Hello@1234"
+}
+
+###
+
+PATCH {{RestaurantsAPI_HostAddress}}/api/identity/user
+Content-Type: application/json
+Authorization: Bearer {{token}}
+
+{
+  "dateOfBirth": "1960-12-16",
+  "nationality": "RSA"
 }
