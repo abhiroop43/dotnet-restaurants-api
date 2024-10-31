@@ -1,5 +1,5 @@
 @RestaurantsAPI_HostAddress = http://localhost:5293
-@token = CfDJ8Ib2g0MYGkJMtazJcRgLALFYe08y9oLogqSdUgoPc5LCFBEA-FgA0v1fzm8jZwBsW6_i1Y1OTvQgTZAuqdt9RnmF86skgcqlwYl7mEs4PLp4bIzGrCvkUGqoCa80SMvX1XBPXylMsLz_DobcNOW-NGGbDXp-UAKuk_AZBBRQmrFL_wWTkaitqIB3_nayb_UTEvddh4ZspZ1wec02pSHN-JX1noITECxRLLwyGuDByAsvLavkftje9RY2LaGk-3JaQs-gkwlNxMTuVI-JGIY5HTctgr0NmnT15muy1QkG-cqz7jNH4jYEi8NSqJm-lz7iDAEP_eHdzc1HyeXlGi8xxZzMIP_2GM9XHnGYbIo06TnQQU4wDOElE6PsatDvPe3pj_4RCY3cMOk6Q-kXT_lfFIlnoUotN4WCq4MmffijZoQMs2KrW9PZ9h07LxVbTdFxWPHTZYfxXYL6Xolf-fgImIHrOCZnmSLQywMZxwCmfrq5sYOf0VUrtPQyBvSOxT1nta2zzO-bdYlTnQK31Uc9u0xBNM6B2V9WJJB-TIjfqCDG55UaW11mrXq6bmFVYThQp0FQyBNzqzht4jFjo9tIk8FO7K59Qmkl5VFBQwrghN1O34BvCbeHrs0p4JpT9KzlzUxuOrLR01Q90cgsIHqVx8jG4TgfMwQSztZudrsQdCnH4i6sElBTtrq2qVXxP8ll-TotCQmZxqlXnhciAmlIhsY
+@token = CfDJ8Ib2g0MYGkJMtazJcRgLALGjXbRDXAB88dfsovEO9ZnFzUWYImDoeZlmSBb55ey5CZtFPt36atPT-q2--bakL7H5KDi55iTK3mp7EUiraapZ0YTJY4NjoKmG83S1jwAWSnb5msjNB8IChy4FEheh1kfMAGI0Nsxf6AJy3dVrArGzPxxlwUlmYn-cr63ZQeT_CoiQwCTYitqCWyWfyvn4mUT8dLNL60namCiUK1fxjrvMSM9WLcIygTMDS1FOvbernnr7YBldBMUe-0OQai3JJ_hJYAWPGWQQ-riBzwBgOcegUKj7-0k9BQhvw4ogoKumEW7MmnwWWSGAjWWnUOE9LynVnLj6uvzI6b1OHO1d-xsJF0OSfKW6SlKdnRXzjUlz5GMitYEtdtN2IG0jjifmTAF6D1ffvQAvzNxVk7N_FX9erGhXJkek_myrfqvMAvfg0FWZcozXfY1HkT3emLxVjVFLHg5oCopOrdAVeV3-OYqnfrw1TJ6SudnrC6JtRsy1FzoLchAMfIo13erV39a5eNkS8AXeggoVvvDdEmpQ2IWAwdMvpPEJubZ3i8g0J-SJ9tqJaN7PAu2kx7ogh4IfnAk-w0bKtfbYvVg2H6I7XuQxkC2xL25fOvh9BVPCP62FQOgqaFqTugLFKzKnch6lHr62GqC58GToU5Ts6ddn3r30xLU9Hgw2Qo4R9g7OpPf8iuQwAmvzJQqzTSxAt3YGyQsvRSzdE_HTYu50QKVynT2pw1BU36NIAqzecBtUWhPYmh9rOCloiwOnXtKFt2q9ydeDPkyVEpNVpUUlfX0nWwEY
 
 GET {{RestaurantsAPI_HostAddress}}/api/restaurants
 Accept: application/json
@@ -15,6 +15,7 @@ Authorization: Bearer {{token}}
 
 POST {{RestaurantsAPI_HostAddress}}/api/restaurants
 Content-Type: application/json
+Authorization: Bearer {{token}}
 
 {
   "name": "City Wok",
@@ -91,7 +92,7 @@ POST {{RestaurantsAPI_HostAddress}}/api/identity/register
 Content-Type: application/json
 
 {
-  "email": "john.doe@example.com",
+  "email": "owner@example.com",
   "password": "Hello@1234"
 }
 
@@ -101,7 +102,7 @@ POST {{RestaurantsAPI_HostAddress}}/api/identity/login
 Content-Type: application/json
 
 {
-  "email": "john.doe@example.com",
+  "email": "owner@example.com",
   "password": "Hello@1234"
 }
 
