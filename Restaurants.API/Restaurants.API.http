@@ -1,5 +1,5 @@
 @RestaurantsAPI_HostAddress = http://localhost:5293
-@token = CfDJ8Ib2g0MYGkJMtazJcRgLALFIVGUeXl6p1h2_k5yFFCiDsXKoNXFZAJJYDnZVgcjnTL-0jbqr0P9AagufmCdlCfXtqWjXbdWuosGYDRFJ9VdPceUZXw1xFaMrZQ8pO9zezu5uSfzVmcTjNbOcrYF_4vui_zzupLzdkHjtxdCLl6WA4ynyIZQqI-1xlxEkDoFs7y77Dts92bGD_DKXarP9Hu0qo5UFFpwRXOIFEqhk2oQipwDdbas0CNEHblaDOnOqh8JBIgrpD3Jrqfh5Vw30-X1Wggl1q6xWv9Ek_QvQ24HJsmAydTDdQuzdV9jbtYXV8_0UVTIwA98NtV1W8CoYCiRtF7sK9OCgOF7Sb4G-GJDQTcLpoFFk4AnSfYe26z-wHz2QOkkzhz0kH6o7hr-BnaP1lXcuZR44qz_Kh_hABq0z-Lo3rsZG2uUY3cRzeA1qdu-qwci4R3WSH2bCsUk-kZ61dF4lUQSKgQpBxF2526BYwoOu05w_txCTYYY30NhEwlbhi55w2M4COU3GXWYldpPxdyrIRoPJBPi2Wl8GoJKYZ7mjKgFyExRkNpcYZH-36vPzbpZ8z3mxwsHVDxH9VJgYgMT2vT6KGZMmMCSLZZQLfM5eh6Skc5w7An2ZFsPtMA6dXniU38zYhMPvR4DjAw9zMtAH1XzDGg4QkU8nTMgwWZYgw--aMhnmKJ3Y-Bsbm-9jfpeur9RA0UeJlRYmRTVelNpL3XzZNU1kmBAvwy8dE6RseVMALaR9MKJt01Fw4aYzOo3erUXKbZqOq6ysWFOlzxuXAddc2CLZbeGJaGYX
+@token = CfDJ8EPr6OA05VpFlkYpp8u7DZpjF5qFv2XTsjrzFUAzRMMU6JRjqrV2sBKXrZhmNobJMNnzcHPtxh2ZKuY_wKQrLpFAi5CFRAuTeQsiWUYMzymbRhImS4ZP6dAFuxT8fmUI7dR5IAmrWUIQ3gxuW0vBVEHZyD6lOqNw8ukcZv5HLBep-uWtTZqcyENACplwIa_q6r_h2Pov_edDCEk95ZfT5xrk99JufURecL8xlSY2HXUHzyfM0OZtmXj6oecC6mL6f5r7V1n43qviobHFBlymQP2MFulVwO2ayNhvbPDdp0qNgvZgaa0N0ntdfB162K2VdM9Bth37zcNom-iXt_VEwdomPv3cx6B1xCWmDcDm0waICJPFn8Ay_2yAjoy4X6fBoQaspfEH6PNYKQu46IhNqlURTWsseEo7JywX7xDLLfWCBUqa4zbMe66fhqUSFzu2Cg3F1liasODQ70Ad4OI2yWAg-mhzDszyvS86ENVpPEIRDEYZ3FA8IfMWw1gyYNKuje2fOGMPFm_I0jX2Ubv7StKh8A68_1SdvbjVRU-pTGgnVClOzeVnBxkCE-qXKsxxzL4CsQM04lsWGFu2S41tJZbJWw_ihlWPnR2vS0EkxQye4tIj2MU1u3dme5j5h3sXDOURUbIkN4g8PBgFoGljXAv32JSNNU8qtZm_gnaVGWJu_MKPuUr29Um6olN4gdhhYOYJMeetQPbCrMihQy0feptc-C4f9jcVymdmTddXP0WzG-xjLyd6XgEHBOUMSPqnvrfoOR29iHbp_EqnkL8hOW7v_KFQ0cSwg9lmAmLpXfp-
 
 GET {{RestaurantsAPI_HostAddress}}/api/restaurants
 Accept: application/json
@@ -92,7 +92,7 @@ POST {{RestaurantsAPI_HostAddress}}/api/identity/register
 Content-Type: application/json
 
 {
-  "email": "owner@example.com",
+  "email": "john.doe@example.com",
   "password": "Hello@1234"
 }
 
@@ -120,6 +120,17 @@ Authorization: Bearer {{token}}
 ###
 
 POST {{RestaurantsAPI_HostAddress}}/api/identity/userRole
+Content-Type: application/json
+Authorization: Bearer {{token}}
+
+{
+  "userEmail": "john.doe@example.com",
+  "roleName": "Owner"
+}
+
+###
+
+DELETE {{RestaurantsAPI_HostAddress}}/api/identity/userRole
 Content-Type: application/json
 Authorization: Bearer {{token}}
 
