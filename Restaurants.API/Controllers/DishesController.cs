@@ -7,6 +7,7 @@ using Restaurants.Application.Dishes.Commands.UpdateDish;
 using Restaurants.Application.Dishes.Dtos;
 using Restaurants.Application.Dishes.Queries.GetAllDishesForRestaurant;
 using Restaurants.Application.Dishes.Queries.GetDishById;
+using Restaurants.Infrastructure.Authorization;
 
 namespace Restaurants.API.Controllers;
 
@@ -28,6 +29,7 @@ public class DishesController(IMediator mediator) : ControllerBase
     [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(DishDto))]
     [ProducesResponseType(StatusCodes.Status404NotFound, Type = typeof(string))]
     [ProducesResponseType(StatusCodes.Status500InternalServerError, Type = typeof(string))]
+    [Authorize(Policy = PolicyNames.AtLeast20)]
     public async Task<IActionResult> GetDishById([FromRoute] Guid restaurantId, [FromRoute] Guid dishId)
     {
         var dish = await mediator.Send(new GetDishByIdQuery(restaurantId, dishId));
@@ -39,6 +41,7 @@ public class DishesController(IMediator mediator) : ControllerBase
     [ProducesResponseType(StatusCodes.Status400BadRequest, Type = typeof(string))]
     [ProducesResponseType(StatusCodes.Status404NotFound, Type = typeof(string))]
     [ProducesResponseType(StatusCodes.Status500InternalServerError, Type = typeof(string))]
+    [Authorize(Policy = PolicyNames.HasNationality)]
     public async Task<IActionResult> AddNewDish([FromRoute] Guid restaurantId, [FromBody] CreateDishCommand command)
     {
         command.RestaurantId = restaurantId;

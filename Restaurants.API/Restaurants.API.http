@@ -1,5 +1,5 @@
 @RestaurantsAPI_HostAddress = http://localhost:5293
-@token = CfDJ8EPr6OA05VpFlkYpp8u7DZorJwcci4cjwi3SigTYjSK-NU6ncSZmvof7ykieYGi38ReSaKk0YQfq6ToQcGHKKCNr6vpHkKRqnsk2TzfRWuW2aTJdROcruZzSV-iYx38eheB9IGePViA6HRJKXL6RersFQcBRr0aNE5rBhI67zin5dN_mD3fUElBPdbvyQbb1Y5QILRkRMYmPfU3zbZVYtZ5_aMeego-7EKGtZKvQ_6l9i_cLRAjRe3pGyedonzQVXZrvfiE5osidulaWaI9d6nb_pDeM4D-3_N5wQKCf6aaiFfHbgLz6OBKim7hpjsCJKEmFPx6lSKmwWkzkeHW9qF5SHbtGrWVJ6NYjwlCivFQOzkYZCQYPLVqqP0-wjCQxvU-fVfGyMU69jHyuYywlQELqHzJ1Nse8gAYKQg0m1p9t3rYBK1OMB_qjydZCOdjpS3vV9Szq1V6Sv7Haafe5TUF7b2xMcI8l4fhz_iO8xcP2AzHb8uiT9EWcg3mJ01KnEI4rAIlLcqRHtP_GOdCXcF_uroyvo364NfkR9PG1gsvmGDh22TiC3lhJzt0TFBn75o_VD13VNVZpieU8XeUzfMQcFuyNlvS9nl0TJ_fkdJ6dptfMUCxHBCfKDjCBL26WAVZ9iiEHAzKy1kQcaO5RxOLUcrRgoAfjW5LsKuRcUQmvW4UuRD7JJDbnlAQK3ql3N-ogCPFTbcAWcbdqLKBVsHKSnLjq8nk9iTwLJy__5nUAoSAg-39FNsNJuhaCnH2kTaKs8seZxj7653HD7H8gKDxS2lDA8hSnrSDE7wu0R49_efhAjyC4hTSgeVcseygx5ZyotNFBeTsRep2oB-YPvFo86ql_wbbmrZ7zzKdEbNTH0kTfCLUUT641y1mBBdF6nA
+@token = CfDJ8Orz0xJooX9Gs0tdWTa0mcy-gs6bEOL7Gl_oGisOIiugNROxcPZmEiV7j97xhW6H4Cu2iEXt4mCLb7P8Gj7Z2cvIPhpxO6jt_5q9YSM5dibcAH5Ni2snrIrh8wScuSQ9Gq_o4f_2I2rTWWZxyEvkSC6Hd3dXf7F9NhowJJN_8vxOUdjS9aB_csvbI3tU804LpvJjCr2-Pt3rcTRGId9PBEbujDQHqmmIAkw799TRvr5vPt1waUOpHWJTPHw-9kWVsXiI_yStGjhvtx_a2VJhwJyLMAkl-VDzaiDLvSMV0eosIYi5HkJ_bOb0G4cALude_coTCg5n5ZxNFibk1VGEoPAq5bOJcRt5uN463i2Kmjj4uWRa_aqEJcJvgJ9_WIKfnHIK7g3CXSL7QbayN6dWy_cc0r4IHsS2qqcW7XNyzDuOokVBGx15Fb-GEFe6WvqDfMO-aPNp2399eNDBqoeaXMmV1e3wzxjPZj5ji92QKEoRjzL3Ac7vpBE8bYVcNGja3F2wzKZPYCnA_GKXxk0UIWvHMth_jeYz8FjEOc-EUFcsRxiVlNqQrzwTV_RsgKd_0D7Yv0txMoQXTgIp85Fho_Y_lwqUsXRQS4s_R1zPAxWwoWvud7g0xGnAaatDiVYIkqwrVVcHIdI-EuFNnkBTEom8rQ_ZIyZL9lNtWfW_Y-2iJqGhcTeMquNAyLbO-Gc2ykDJDw0VlLacM45FzXjURkTK9RDIqaquc_5xGF_qBO13q8K8N9Wxx21wISZKSRJr_XHlvpgUn8Chq627Yqa1Uwgwf6hvHJtN9nc5asNOobdu_xG0OWht63zaB8hiRvoNhrDQUDh_DifyBVqBCisxHREyLQJzrDKSwmilB4XuXyh6CczRp9WCbL2BOKH8G2Fymw
 
 GET {{RestaurantsAPI_HostAddress}}/api/restaurants
 Accept: application/json
@@ -48,18 +48,21 @@ Content-Type: application/json
 
 ###
 
-GET {{RestaurantsAPI_HostAddress}}/api/restaurants/54a3718d-9cb5-48e1-81f3-c29673125bcb/dishes
+GET {{RestaurantsAPI_HostAddress}}/api/restaurants/3af987b0-e8ca-4293-ebc5-08dcea06ac45/dishes
 Accept: application/json
+Authorization: Bearer {{token}}
 
 ###
 
 GET {{RestaurantsAPI_HostAddress}}/api/restaurants/3af987b0-e8ca-4293-ebc5-08dcea06ac45/dishes/c4c23fee-61d9-418d-ad02-08dcea06ac4d
 Accept: application/json
+Authorization: Bearer {{token}}
 
 ###
 
-POST {{RestaurantsAPI_HostAddress}}/api/restaurants/54a3718d-9cb5-48e1-81f3-c29673125bcb/dishes
+POST {{RestaurantsAPI_HostAddress}}/api/restaurants/3af987b0-e8ca-4293-ebc5-08dcea06ac45/dishes
 Content-Type: application/json
+Authorization: Bearer {{token}}
 
 {
   "name": "Chicken Kadai",
@@ -92,7 +95,7 @@ POST {{RestaurantsAPI_HostAddress}}/api/identity/register
 Content-Type: application/json
 
 {
-  "email": "john.doe@example.com",
+  "email": "owner@example.com",
   "password": "Hello@1234"
 }
 
@@ -102,7 +105,7 @@ POST {{RestaurantsAPI_HostAddress}}/api/identity/login
 Content-Type: application/json
 
 {
-  "email": "admin@example.com",
+  "email": "john.doe@example.com",
   "password": "Hello@1234"
 }
 
@@ -113,8 +116,8 @@ Content-Type: application/json
 Authorization: Bearer {{token}}
 
 {
-  "dateOfBirth": "1960-12-16",
-  "nationality": "RSA"
+  "dateOfBirth": "2010-11-23",
+  "nationality": "GER"
 }
 
 ###
@@ -124,7 +127,7 @@ Content-Type: application/json
 Authorization: Bearer {{token}}
 
 {
-  "userEmail": "john.doe@example.com",
+  "userEmail": "owner@example.com",
   "roleName": "Owner"
 }
 
