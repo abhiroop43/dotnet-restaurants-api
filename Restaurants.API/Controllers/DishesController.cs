@@ -19,6 +19,7 @@ public class DishesController(IMediator mediator) : ControllerBase
     [HttpGet("")]
     [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(IEnumerable<DishDto>))]
     [ProducesResponseType(StatusCodes.Status500InternalServerError, Type = typeof(string))]
+    [Authorize(Policy = PolicyNames.AtLeast2RestaurantsCreated)]
     public async Task<IActionResult> GetAllDishesForRestaurant([FromRoute] Guid restaurantId)
     {
         var dishes = await mediator.Send(new GetAllDishesForRestaurantQuery(restaurantId));

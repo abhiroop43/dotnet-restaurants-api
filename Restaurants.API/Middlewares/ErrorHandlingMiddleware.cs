@@ -22,6 +22,12 @@ public class ErrorHandlingMiddleware(ILogger<ErrorHandlingMiddleware> logger) : 
             context.Response.StatusCode = 400;
             await context.Response.WriteAsync(badRequest.Message);
         }
+        catch (ForbiddenException forbidden)
+        {
+            logger.LogWarning(forbidden.Message);
+            context.Response.StatusCode = 403;
+            await context.Response.WriteAsync(forbidden.Message);
+        }
         catch (Exception ex)
         {
             logger.LogError(ex, ex.Message);

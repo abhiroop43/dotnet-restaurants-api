@@ -1,5 +1,5 @@
 @RestaurantsAPI_HostAddress = http://localhost:5293
-@token = CfDJ8Orz0xJooX9Gs0tdWTa0mcyg7BJEk0RE8DLnCJ6J_FuDNMashvkPT1W0nk27oHKCEQuroYQocxoY23XN8Srrf0kivHpREmumvkgWEJpELbx0g4ZzHsmNZ6bCvX078J73HdBJ-183NpXEfXVvbOyXjDz_hyfY83-DInzgDcpi_pjsLJtuRcNbuhSyPQp6LvMHcKsRgXdEN8-lNhgD_tV-RWp4pRy6yG3Sa4VHsxo_Gk8Tdj_0KhuInSNjJBgkZGOYmjBVpzWb-aGupUBKNbKQFgCTqYdhEgXce70-oRg9kB7PhVDuSqR0Y7WkTT1EbOov-Q6It9-Cj5fJU9RwpYtMLncpqh77exoLMyO-jEhQhcDY7p2aPmCzLMgX7kKQNfMWJWkGejx1rRn_xi-FKLTl1SHXCdNaq1Gk7pE9spJVkSC0GmfbyFmJI1SArfayCZvlX4w4bwc7XUCmu9KRIDREuEqnjc6ND-CjmB5FmfI5p2leEIt86Vn-JerUQ1H_0aGw9pA5RZ-1Ypgi6Dm3Df3eRVfYbJ-cbJHrDxmq1R_ick0OKxVFxAxE2ZC1B6OJA8WRszzUIQF6sWCzwJcdkvfyQOlrgcyDv7zhgd8mXjIkR0b_WuoBWDpwxBu_biqudaQeK_Wl5ppPrkZK8VBWAKMFvArYTIVqARxKwb9tyO9xpM1XxJweDqfPQ6JxorTBs3PWHlN9W9xjwDx6WTbsLpgllyq-py9qUWok2TKLo2x5qXkFVZo0TENgd09_BYpPuXN4x4bPIFFhiU2D70LiV36gefhCDyLtQjBhFstGaXbVDem6k50DCw4Hs2KW_hVKgxZ9XygUMbTQlLVRh7jKRoRla2bLaZqeZEhbxuGZEjLt1Y0KlQ_-7ctVWDftHX5jhKLonQ
+@token = CfDJ8Orz0xJooX9Gs0tdWTa0mcykInoYC2vQyztZCIwDMb6pro7dG0MoCaduHzQZyJ_YjIeuAkDQQYBzcyYAgbxQ_ZXWsKCNtJ3XwKEyxbN6ljlMmfmCtInUPOqssUEvp6-AEL_hJi6pPVUX_NvJJLTsGqXu3o3IjQJ2E3bOlriP5RxjzZn3Q6vSq2ZOFCP0P3BfplxEV8-S7X2YvPSDfuR2umvMB19nZjXFNEvP3wzJJhC6uS-_Dx-tqX7AoRcG5L4K87ZSbkygwl8PZOvHAVGeDBgKNWRooOAsuWJuGarPsFEEn2WB8_198DjkPU_gRyGczD1l68U-qoEqn6gS3O6ivXva1NtKa_wfd2bUICVJswtQs_BSX4MBb75aejMoegEI9b-O4BwDKbQD6tS2eY1E1UwQXZ3BHttMRtsMVAoxjEBoxYb_QFY-BkpFq7r0SfdA837fNPo1X0lvhNBu7nkmfuGdTFPEjRyuWum66C2chymXNOhIGHZyiOGK3vLjvxDirABQWVPOL9MlWE3gNfl9Ld4p7M2BzKCs2Ap62o8GIzLNs_pE8D7-tJYKPdhzMWDeHxdZzKlBVzOG5SKqSmqjlXpEgQgLHBZW6fkTxD-eRSfsgHGOMuikNshFN_Ct5Tu0bMZguIw9vNyB35RNetP0diKerRd8G2eab5f3LCLLqZbG0UKpb7kVFBqmXwLSaOmSKAKLfcacy497mMdtpkUNaZ5wIjbAnIlt3ZZ6CmyobxKaEtg96hWP87pdVDZdFCV1WDa3zMO6JG85k4gqebcHgS-DSL2PzGa5VDX7Wx9MyJxJ
 
 GET {{RestaurantsAPI_HostAddress}}/api/restaurants
 Accept: application/json
@@ -31,16 +31,18 @@ Authorization: Bearer {{token}}
 
 ###
 
-DELETE {{RestaurantsAPI_HostAddress}}/api/restaurants/97ca1637-93ea-4b1c-85dd-91e2a253fa3d
+DELETE {{RestaurantsAPI_HostAddress}}/api/restaurants/efae50f9-f6e8-4046-91a0-a4afcb056dfd
 Accept: application/json
+Authorization: Bearer {{token}}
 
 ###
 
 PATCH {{RestaurantsAPI_HostAddress}}/api/restaurants
 Content-Type: application/json
+Authorization: Bearer {{token}}
 
 {
-  "id": "97ca1637-93ea-4b1c-85dd-91e2a253fa3d",
+  "id": "efae50f9-f6e8-4046-91a0-a4afcb056dfd",
   "name": "City Sushi 1",
   "description": "The most authentic Japanese cuisine in the region",
   "hasDelivery": true
@@ -105,7 +107,7 @@ POST {{RestaurantsAPI_HostAddress}}/api/identity/login
 Content-Type: application/json
 
 {
-  "email": "owner@example.com",
+  "email": "admin@example.com",
   "password": "Hello@1234"
 }
 

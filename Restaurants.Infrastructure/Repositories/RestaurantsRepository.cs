@@ -15,6 +15,14 @@ internal class RestaurantsRepository(RestaurantsDbContext dbContext) : IRestaura
             .ToListAsync();
     }
 
+    public async Task<IEnumerable<Restaurant>> GetAllByOwnerAsync(string ownerId)
+    {
+        return await dbContext.Restaurants
+            .Where(r => r.IsActive
+                        && r.OwnerId.ToUpper() == ownerId.ToUpper())
+            .ToListAsync();
+    }
+
     public async Task<Restaurant?> GetByIdAsync(Guid id)
     {
         // var guid = Guid.Parse(id);
