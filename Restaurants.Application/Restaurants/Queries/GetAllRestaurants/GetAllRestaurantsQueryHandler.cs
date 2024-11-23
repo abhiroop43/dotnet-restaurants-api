@@ -17,7 +17,7 @@ public class GetAllRestaurantsQueryHandler(
     {
         logger.LogInformation("Getting all restaurants");
         var (restaurants, totalCount) =
-            await repository.GetByPhraseAsync(request.SearchPhrase, request.PageSize, request.PageNumber);
+            await repository.GetByPhraseAsync(request.SearchPhrase, request.PageSize, request.PageNumber, request.SortBy, request.SortDirection);
 
         var restaurantsList = mapper.Map<IEnumerable<RestaurantDto>>(restaurants);
         var result = new PagedResult<RestaurantDto>(restaurantsList, totalCount, request.PageSize, request.PageNumber);

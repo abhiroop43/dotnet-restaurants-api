@@ -6,7 +6,7 @@ Accept: application/json
 
 ###
 
-GET {{RestaurantsAPI_HostAddress}}/api/restaurants?pageSize=2&pageNumber=1
+GET {{RestaurantsAPI_HostAddress}}/api/restaurants?pageSize=5&pageNumber=1&sortBy=Name&sortDirection=Ascending
 Accept: application/json
 
 ###
