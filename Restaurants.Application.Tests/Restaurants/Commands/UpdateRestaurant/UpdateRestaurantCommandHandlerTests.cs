@@ -15,6 +15,25 @@ namespace Restaurants.Application.Tests.Restaurants.Commands.UpdateRestaurant;
 [TestSubject(typeof(UpdateRestaurantCommandHandler))]
 public class UpdateRestaurantCommandHandlerTests
 {
+    private readonly UpdateRestaurantCommandHandler _handler;
+    private readonly Mock<IMapper> _mapperMock;
+    private readonly Mock<IRestaurantAuthorizationService> _restaurantAuthorizationServiceMock;
+    private readonly Mock<IRestaurantsRepository> _restaurantsRepositoryMock;
+
+    public UpdateRestaurantCommandHandlerTests()
+    {
+        Mock<ILogger<UpdateRestaurantCommandHandler>> loggerMock = new();
+        _restaurantsRepositoryMock = new Mock<IRestaurantsRepository>();
+        _mapperMock = new Mock<IMapper>();
+        _restaurantAuthorizationServiceMock = new Mock<IRestaurantAuthorizationService>();
+
+        _handler = new UpdateRestaurantCommandHandler(
+            loggerMock.Object,
+            _mapperMock.Object,
+            _restaurantsRepositoryMock.Object,
+            _restaurantAuthorizationServiceMock.Object);
+    }
+
     [Fact]
     public async Task Handle_ForValidCommand_RestaurantUpdated()
     {
@@ -36,43 +55,27 @@ public class UpdateRestaurantCommandHandlerTests
             Name = "Test Updated Name"
         };
 
-        var loggerMock = new Mock<ILogger<UpdateRestaurantCommandHandler>>();
+        _mapperMock.Setup(mapper => mapper.Map<UpdateRestaurantCommand, Restaurant>(command)).Returns(restaurant);
 
-        var mapperMock = new Mock<IMapper>();
-        mapperMock.Setup(mapper => mapper.Map<UpdateRestaurantCommand, Restaurant>(command)).Returns(restaurant);
+        _restaurantsRepositoryMock.Setup(r => r.GetByIdAsync(It.IsAny<Guid>())).ReturnsAsync(restaurant);
+        _restaurantsRepositoryMock.Setup(r => r.SaveChangesAsync()).ReturnsAsync(1);
 
-        var restaurantRepositoryMock = new Mock<IRestaurantsRepository>();
-        restaurantRepositoryMock.Setup(r => r.GetByIdAsync(It.IsAny<Guid>())).ReturnsAsync(restaurant);
-        restaurantRepositoryMock.Setup(r => r.SaveChangesAsync()).ReturnsAsync(1);
-
-        var restaurantAuthorizationServiceMock = new Mock<IRestaurantAuthorizationService>();
-        restaurantAuthorizationServiceMock.Setup(r => r.Authorize(It.IsAny<Restaurant>(), ResourceOperation.Update))
+        _restaurantAuthorizationServiceMock.Setup(r => r.Authorize(It.IsAny<Restaurant>(), ResourceOperation.Update))
             .Returns(true);
 
-        var commandHandler = new UpdateRestaurantCommandHandler(loggerMock.Object, mapperMock.Object,
-            restaurantRepositoryMock.Object, restaurantAuthorizationServiceMock.Object);
+        await _handler.Handle(command, CancellationToken.None);
 
-        await commandHandler.Handle(command, CancellationToken.None);
-
-        restaurantRepositoryMock.Verify(r => r.GetByIdAsync(It.IsAny<Guid>()), Times.Once);
-        restaurantRepositoryMock.Verify(r => r.SaveChangesAsync(), Times.Once);
-        restaurantAuthorizationServiceMock.Verify(r => r.Authorize(It.IsAny<Restaurant>(), ResourceOperation.Update),
+        _restaurantsRepositoryMock.Verify(r => r.GetByIdAsync(It.IsAny<Guid>()), Times.Once);
+        _restaurantsRepositoryMock.Verify(r => r.SaveChangesAsync(), Times.Once);
+        _restaurantAuthorizationServiceMock.Verify(r => r.Authorize(It.IsAny<Restaurant>(), ResourceOperation.Update),
             Times.Once);
     }
 
     [Fact]
-    public void Handle_ForInvalidCommand_ThrowsNotFoundException()
+    public async Task Handle_ForInvalidCommand_ShouldThrowNotFoundException()
     {
         var restaurantId = Guid.NewGuid();
 
-        var restaurant = new Restaurant
-        {
-            Id = restaurantId,
-            Name = "Test Restaurant",
-            Description = "Test Description",
-            Category = "Traditional",
-            IsActive = true
-        };
         var command = new UpdateRestaurantCommand
         {
             Id = Guid.NewGuid(),
@@ -81,33 +84,20 @@ public class UpdateRestaurantCommandHandlerTests
             Name = "Test Updated Name"
         };
 
-        var loggerMock = new Mock<ILogger<UpdateRestaurantCommandHandler>>();
+        _restaurantsRepositoryMock.Setup(r => r.GetByIdAsync(restaurantId)).ReturnsAsync((Restaurant?)null);
 
-        var mapperMock = new Mock<IMapper>();
-        mapperMock.Setup(mapper => mapper.Map<UpdateRestaurantCommand, Restaurant>(command)).Returns(restaurant);
 
-        var restaurantRepositoryMock = new Mock<IRestaurantsRepository>();
-        restaurantRepositoryMock.Setup(r => r.GetByIdAsync(restaurantId)).ReturnsAsync(restaurant);
-        // restaurantRepositoryMock.Setup(r => r.SaveChangesAsync()).ReturnsAsync(1);
+        var act = async () => await _handler.Handle(command, CancellationToken.None);
 
-        var restaurantAuthorizationServiceMock = new Mock<IRestaurantAuthorizationService>();
-        // restaurantAuthorizationServiceMock.Setup(r => r.Authorize(It.IsAny<Restaurant>(), ResourceOperation.Update))
-        // .Returns(true);
-
-        var commandHandler = new UpdateRestaurantCommandHandler(loggerMock.Object, mapperMock.Object,
-            restaurantRepositoryMock.Object, restaurantAuthorizationServiceMock.Object);
-
-        Action act = void () => commandHandler.Handle(command, CancellationToken.None).GetAwaiter().GetResult();
-
-        act.Should().Throw<NotFoundException>();
-        restaurantRepositoryMock.Verify(r => r.GetByIdAsync(It.IsAny<Guid>()), Times.Once);
-        restaurantRepositoryMock.Verify(r => r.SaveChangesAsync(), Times.Never);
-        restaurantAuthorizationServiceMock.Verify(r => r.Authorize(It.IsAny<Restaurant>(), ResourceOperation.Update),
+        await act.Should().ThrowAsync<NotFoundException>();
+        _restaurantsRepositoryMock.Verify(r => r.GetByIdAsync(It.IsAny<Guid>()), Times.Once);
+        _restaurantsRepositoryMock.Verify(r => r.SaveChangesAsync(), Times.Never);
+        _restaurantAuthorizationServiceMock.Verify(r => r.Authorize(It.IsAny<Restaurant>(), ResourceOperation.Update),
             Times.Never);
     }
-    
+
     [Fact]
-    public void Handle_ForInvalidCommand_ThrowsForbiddenException()
+    public async Task Handle_WithUnauthorizedUser_ShouldThrowForbiddenException()
     {
         var restaurantId = Guid.NewGuid();
 
@@ -127,28 +117,22 @@ public class UpdateRestaurantCommandHandlerTests
             Name = "Test Updated Name"
         };
 
-        var loggerMock = new Mock<ILogger<UpdateRestaurantCommandHandler>>();
 
-        var mapperMock = new Mock<IMapper>();
-        mapperMock.Setup(mapper => mapper.Map<UpdateRestaurantCommand, Restaurant>(command)).Returns(restaurant);
+        _mapperMock.Setup(mapper => mapper.Map<UpdateRestaurantCommand, Restaurant>(command)).Returns(restaurant);
 
-        var restaurantRepositoryMock = new Mock<IRestaurantsRepository>();
-        restaurantRepositoryMock.Setup(r => r.GetByIdAsync(It.IsAny<Guid>())).ReturnsAsync(restaurant);
-        // restaurantRepositoryMock.Setup(r => r.SaveChangesAsync()).ReturnsAsync(1);
+        _restaurantsRepositoryMock.Setup(r => r.GetByIdAsync(It.IsAny<Guid>())).ReturnsAsync(restaurant);
 
-        var restaurantAuthorizationServiceMock = new Mock<IRestaurantAuthorizationService>();
-        restaurantAuthorizationServiceMock.Setup(r => r.Authorize(restaurant, ResourceOperation.Update))
-        .Throws(new ForbiddenException("Test exception"));
+        _restaurantAuthorizationServiceMock
+            .Setup(a => a.Authorize(restaurant, ResourceOperation.Update))
+            .Returns(false);
 
-        var commandHandler = new UpdateRestaurantCommandHandler(loggerMock.Object, mapperMock.Object,
-            restaurantRepositoryMock.Object, restaurantAuthorizationServiceMock.Object);
 
-        Action act = void () => commandHandler.Handle(command, CancellationToken.None).GetAwaiter().GetResult();
+        var act = async () => await _handler.Handle(command, CancellationToken.None);
 
-        act.Should().Throw<ForbiddenException>();
-        restaurantRepositoryMock.Verify(r => r.GetByIdAsync(It.IsAny<Guid>()), Times.Once);
-        restaurantAuthorizationServiceMock.Verify(r => r.Authorize(restaurant, ResourceOperation.Update),
+        await act.Should().ThrowAsync<ForbiddenException>();
+        _restaurantsRepositoryMock.Verify(r => r.GetByIdAsync(It.IsAny<Guid>()), Times.Once);
+        _restaurantAuthorizationServiceMock.Verify(r => r.Authorize(restaurant, ResourceOperation.Update),
             Times.Once);
-        restaurantRepositoryMock.Verify(r => r.SaveChangesAsync(), Times.Never);
+        _restaurantsRepositoryMock.Verify(r => r.SaveChangesAsync(), Times.Never);
     }
 }
