@@ -1,0 +1,149 @@
+@RestaurantsAPI_HostAddress = http://localhost:5293
+@token = CfDJ8Orz0xJooX9Gs0tdWTa0mcykInoYC2vQyztZCIwDMb6pro7dG0MoCaduHzQZyJ_YjIeuAkDQQYBzcyYAgbxQ_ZXWsKCNtJ3XwKEyxbN6ljlMmfmCtInUPOqssUEvp6-AEL_hJi6pPVUX_NvJJLTsGqXu3o3IjQJ2E3bOlriP5RxjzZn3Q6vSq2ZOFCP0P3BfplxEV8-S7X2YvPSDfuR2umvMB19nZjXFNEvP3wzJJhC6uS-_Dx-tqX7AoRcG5L4K87ZSbkygwl8PZOvHAVGeDBgKNWRooOAsuWJuGarPsFEEn2WB8_198DjkPU_gRyGczD1l68U-qoEqn6gS3O6ivXva1NtKa_wfd2bUICVJswtQs_BSX4MBb75aejMoegEI9b-O4BwDKbQD6tS2eY1E1UwQXZ3BHttMRtsMVAoxjEBoxYb_QFY-BkpFq7r0SfdA837fNPo1X0lvhNBu7nkmfuGdTFPEjRyuWum66C2chymXNOhIGHZyiOGK3vLjvxDirABQWVPOL9MlWE3gNfl9Ld4p7M2BzKCs2Ap62o8GIzLNs_pE8D7-tJYKPdhzMWDeHxdZzKlBVzOG5SKqSmqjlXpEgQgLHBZW6fkTxD-eRSfsgHGOMuikNshFN_Ct5Tu0bMZguIw9vNyB35RNetP0diKerRd8G2eab5f3LCLLqZbG0UKpb7kVFBqmXwLSaOmSKAKLfcacy497mMdtpkUNaZ5wIjbAnIlt3ZZ6CmyobxKaEtg96hWP87pdVDZdFCV1WDa3zMO6JG85k4gqebcHgS-DSL2PzGa5VDX7Wx9MyJxJ
+
+GET {{RestaurantsAPI_HostAddress}}/api/restaurants?searchPhrase=City
+Accept: application/json
+
+###
+
+GET {{RestaurantsAPI_HostAddress}}/api/restaurants?pageSize=5&pageNumber=1&sortBy=Name&sortDirection=Ascending
+Accept: application/json
+
+###
+
+GET {{RestaurantsAPI_HostAddress}}/api/restaurants/18edc686-fa59-4e53-96cc-cf1be934464a
+Accept: application/json
+Authorization: Bearer {{token}}
+
+###
+
+POST {{RestaurantsAPI_HostAddress}}/api/restaurants
+Content-Type: application/json
+Authorization: Bearer {{token}}
+
+{
+  "name": "Owner Restaurant",
+  "description": "The world's best Chinese food",
+  "category": "Chinese",
+  "hasDelivery": true,
+  "contactEmail": "bruce.lee@chinese-spy.com",
+  "contactNumber": "123-456-7890",
+  "city": "South Park",
+  "street": "Main Street",
+  "postalCode": "22-333"
+}
+
+###
+
+DELETE {{RestaurantsAPI_HostAddress}}/api/restaurants/efae50f9-f6e8-4046-91a0-a4afcb056dfd
+Accept: application/json
+Authorization: Bearer {{token}}
+
+###
+
+PATCH {{RestaurantsAPI_HostAddress}}/api/restaurants
+Content-Type: application/json
+Authorization: Bearer {{token}}
+
+{
+  "id": "efae50f9-f6e8-4046-91a0-a4afcb056dfd",
+  "name": "City Sushi 1",
+  "description": "The most authentic Japanese cuisine in the region",
+  "hasDelivery": true
+}
+
+###
+
+GET {{RestaurantsAPI_HostAddress}}/api/restaurants/3af987b0-e8ca-4293-ebc5-08dcea06ac45/dishes
+Accept: application/json
+Authorization: Bearer {{token}}
+
+###
+
+GET {{RestaurantsAPI_HostAddress}}/api/restaurants/3af987b0-e8ca-4293-ebc5-08dcea06ac45/dishes/c4c23fee-61d9-418d-ad02-08dcea06ac4d
+Accept: application/json
+Authorization: Bearer {{token}}
+
+###
+
+POST {{RestaurantsAPI_HostAddress}}/api/restaurants/3af987b0-e8ca-4293-ebc5-08dcea06ac45/dishes
+Content-Type: application/json
+Authorization: Bearer {{token}}
+
+{
+  "name": "Chicken Kadai",
+  "description": "A spicy chicken delicacy",
+  "price": 24.99,
+  "kiloCalories": 520
+}
+
+###
+
+PATCH {{RestaurantsAPI_HostAddress}}/api/restaurants/54a3718d-9cb5-48e1-81f3-c29673125bcb/dishes/
+Content-Type: application/json
+
+{
+  "id": "AAFCCE92-4E96-48F8-A1C8-0C92C344241F",
+  "name": "Chicken Kadai",
+  "description": "Yet another disgusting indian dish with low nutritional value and high calories",
+  "price": 49.99,
+  "kiloCalories": 600
+}
+
+###
+
+DELETE {{RestaurantsAPI_HostAddress}}/api/restaurants/54a3718d-9cb5-48e1-81f3-c29673125bcb/dishes/aafcce92-4e96-48f8-a1c8-0c92c344241f
+Accept: application/json
+
+###
+
+POST {{RestaurantsAPI_HostAddress}}/api/identity/register
+Content-Type: application/json
+
+{
+  "email": "owner@example.com",
+  "password": "Hello@1234"
+}
+
+###
+
+POST {{RestaurantsAPI_HostAddress}}/api/identity/login
+Content-Type: application/json
+
+{
+  "email": "admin@example.com",
+  "password": "Hello@1234"
+}
+
+###
+
+PATCH {{RestaurantsAPI_HostAddress}}/api/identity/user
+Content-Type: application/json
+Authorization: Bearer {{token}}
+
+{
+  "dateOfBirth": "2010-11-23",
+  "nationality": "GER"
+}
+
+###
+
+POST {{RestaurantsAPI_HostAddress}}/api/identity/userRole
+Content-Type: application/json
+Authorization: Bearer {{token}}
+
+{
+  "userEmail": "owner@example.com",
+  "roleName": "Owner"
+}
+
+###
+
+DELETE {{RestaurantsAPI_HostAddress}}/api/identity/userRole
+Content-Type: application/json
+Authorization: Bearer {{token}}
+
+{
+  "userEmail": "john.doe@example.com",
+  "roleName": "Owner"
+}
