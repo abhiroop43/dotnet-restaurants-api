@@ -1,4 +1,5 @@
 using Microsoft.AspNetCore.Identity;
+using Microsoft.EntityFrameworkCore;
 using Restaurants.Domain.Constants;
 using Restaurants.Domain.Entities;
 using Restaurants.Infrastructure.Persistence;
@@ -9,6 +10,9 @@ internal class RestaurantSeeder(RestaurantsDbContext dbContext) : IRestaurantSee
 {
     public async Task Seed()
     {
+        var pendingMigrations = await dbContext.Database.GetPendingMigrationsAsync();
+        if (pendingMigrations.Any()) await dbContext.Database.MigrateAsync();
+
         if (!await dbContext.Database.CanConnectAsync()) return;
 
 
@@ -50,10 +54,19 @@ internal class RestaurantSeeder(RestaurantsDbContext dbContext) : IRestaurantSee
 
     private IEnumerable<Restaurant> GetRestaurants()
     {
+        var owner = new User
+        {
+            Email = "seed-user@test.com",
+            NormalizedEmail = "seed-user@test.com",
+            UserName = "seed-user@test.com",
+            NormalizedUserName = "seed-user@test.com",
+            EmailConfirmed = true
+        };
         return new List<Restaurant>
         {
             new()
             {
+                Owner = owner,
                 Name = "The Gourmet Kitchen",
                 Category = "Italian",
                 Description = "Authentic Italian cuisine",
@@ -85,6 +98,7 @@ internal class RestaurantSeeder(RestaurantsDbContext dbContext) : IRestaurantSee
             },
             new()
             {
+                Owner = owner,
                 Name = "Sushi World",
                 Category = "Japanese",
                 Description = "Fresh sushi and sashimi",
