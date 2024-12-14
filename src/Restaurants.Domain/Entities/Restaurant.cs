@@ -16,4 +16,5 @@ public class Restaurant
     public required bool IsActive { get; set; } = true;
     public User Owner { get; set; } = default!;
     public string OwnerId { get; set; } = default!;
+    public string? LogoUrl { get; set; }
 }

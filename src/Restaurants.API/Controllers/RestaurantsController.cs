@@ -4,6 +4,7 @@ using Microsoft.AspNetCore.Mvc;
 using Restaurants.Application.Restaurants.Commands.CreateRestaurant;
 using Restaurants.Application.Restaurants.Commands.DeleteRestaurant;
 using Restaurants.Application.Restaurants.Commands.UpdateRestaurant;
+using Restaurants.Application.Restaurants.Commands.UploadRestaurantLogo;
 using Restaurants.Application.Restaurants.Dtos;
 using Restaurants.Application.Restaurants.Queries.GetAllRestaurants;
 using Restaurants.Application.Restaurants.Queries.GetRestaurantById;
@@ -58,6 +59,23 @@ public class RestaurantsController(IMediator mediator) : ControllerBase
     public async Task<IActionResult> Delete([FromRoute] Guid id)
     {
         await mediator.Send(new DeleteRestaurantCommand(id));
+        return NoContent();
+    }
+
+    [HttpPost("{id}/logo")]
+    [ProducesResponseType(StatusCodes.Status201Created, Type = typeof(string))]
+    [ProducesResponseType(StatusCodes.Status500InternalServerError, Type = typeof(string))]
+    public async Task<IActionResult> Create([FromRoute] Guid id, IFormFile file)
+    {
+        await using var stream = file.OpenReadStream();
+        var command = new UploadRestaurantLogoCommand
+        {
+            RestaurantId = id,
+            FileName = file.FileName,
+            File = stream
+        };
+
+        await mediator.Send(command);
         return NoContent();
     }
 }
