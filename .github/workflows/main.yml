@@ -1,11 +1,8 @@
-name: restaurants-api
+name: restaurants-api-ci
 on:
-  push:
-    branches:
-    - dev
   pull_request:
     branches:
-    - dev
+    - master
   workflow_dispatch:
 
 jobs:
