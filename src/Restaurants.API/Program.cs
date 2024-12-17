@@ -1,4 +1,5 @@
 using Azure.Monitor.OpenTelemetry.AspNetCore;
+using DotNetEnv;
 using Restaurants.API.Extensions;
 using Restaurants.API.Middlewares;
 using Restaurants.Application.Extensions;
@@ -16,7 +17,10 @@ try
     builder.Services.AddApplication();
     builder.Services.AddInfrastructure(builder.Configuration);
 
-    builder.Services.AddOpenTelemetry().UseAzureMonitor();
+    Env.Load();
+
+    var connectionString = Environment.GetEnvironmentVariable("APPLICATIONINSIGHTS_CONNECTION_STRING");
+    builder.Services.AddOpenTelemetry().UseAzureMonitor(options => options.ConnectionString = connectionString);
 
     var app = builder.Build();
 
