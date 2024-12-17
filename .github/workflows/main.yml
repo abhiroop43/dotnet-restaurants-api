@@ -24,9 +24,9 @@ jobs:
       - name: Build
         run: dotnet build --no-restore
         env:
-          super_secret: ${{ secrets.APPLICATIONINSIGHTS_CONNECTION_STRING }}
+          APPLICATIONINSIGHTS_CONNECTION_STRING: ${{ secrets.APPLICATIONINSIGHTS_CONNECTION_STRING }}
       - name: Test
-        run: dotnet test
+        run: dotnet test -e "$APPLICATIONINSIGHTS_CONNECTION_STRING"
         env:
-          super_secret: ${{ secrets.APPLICATIONINSIGHTS_CONNECTION_STRING }}
+          APPLICATIONINSIGHTS_CONNECTION_STRING: ${{ secrets.APPLICATIONINSIGHTS_CONNECTION_STRING }}
                 
