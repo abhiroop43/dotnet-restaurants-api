@@ -31,5 +31,5 @@ jobs:
         env:
           APPLICATIONINSIGHTS_CONNECTION_STRING: ${{ secrets.APPLICATIONINSIGHTS_CONNECTION_STRING }}
         run: |
-          dotnet test -e "$APPLICATIONINSIGHTS_CONNECTION_STRING"
+          dotnet test -e --param="APPLICATIONINSIGHTS_CONNECTION_STRING=${{ secrets.APPLICATIONINSIGHTS_CONNECTION_STRING }}"
                 
