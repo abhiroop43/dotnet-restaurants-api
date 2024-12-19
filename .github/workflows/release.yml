@@ -33,7 +33,7 @@ jobs:
           path: ${{env.DOTNET_ROOT}}/api
   deploy-dev:
     name: Deploy
-    runs_on: ubuntu-latest
+    runs-on: ubuntu-latest
     needs: build
     steps:
       - name: Download a Build Artifact
