@@ -8,9 +8,9 @@ This is a Backend API for a Restaurant Management System in .NET Framework using
 
 The API can be accessed at the following URLs:
 
-- [Staging Environment](restaurants-api-dev-dhbtgce0bnhyfyfq.uaenorth-01.azurewebsites.net)
+- [Staging Environment](https://restaurants-api-dev-dhbtgce0bnhyfyfq.uaenorth-01.azurewebsites.net/swagger)
 
-- [Production Environment](abhiroopsantra-restaurants-api-prod.azurewebsites.net)
+- [Production Environment](https://abhiroopsantra-restaurants-api-prod.azurewebsites.net)
 
 ## Tech Stack
 
