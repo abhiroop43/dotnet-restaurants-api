@@ -1,5 +1,9 @@
 # Restaurants API Backend
 
+[![build-and-test](https://github.com/abhiroop43/dotnet-restaurants-api/actions/workflows/main.yml/badge.svg)](https://github.com/abhiroop43/dotnet-restaurants-api/actions/workflows/main.yml)
+[![deployment](https://github.com/abhiroop43/dotnet-restaurants-api/actions/workflows/release.yml/badge.svg)](https://github.com/abhiroop43/dotnet-restaurants-api/actions/workflows/release.yml)
+
+
 This is a Backend API for a Restaurant Management System in .NET Framework using CQRS pattern and DDD.
 
 The API can be accessed at the following URLs:
