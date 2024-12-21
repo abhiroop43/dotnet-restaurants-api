@@ -8,7 +8,7 @@ This is a Backend API for a Restaurant Management System in .NET Framework using
 
 The API can be accessed at the following URLs:
 
-- [Staging Environment](https://restaurants-api-dev-dhbtgce0bnhyfyfq.uaenorth-01.azurewebsites.net/swagger)
+- [Staging Environment](https://restaurants-api-dev-dhbtgce0bnhyfyfq.uaenorth-01.azurewebsites.net)
 
 - [Production Environment](https://abhiroopsantra-restaurants-api-prod.azurewebsites.net)
 
@@ -23,7 +23,7 @@ The API can be accessed at the following URLs:
 - **API Documentation**: Swagger
 - **Testing**: xUnit, Moq
 - **CI/CD**: GitHub Actions
-- **Deployment**: Azure App Service
+- **Deployment**: Azure App Service, Azure Storage Service
 - **Design Patterns**: CQRS, Mediator, Repository, Domain-Driven Design
 
 ## Project Structure
