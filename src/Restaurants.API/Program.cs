@@ -20,7 +20,8 @@ try
     Env.Load();
 
     var connectionString = Environment.GetEnvironmentVariable("APPLICATIONINSIGHTS_CONNECTION_STRING");
-    builder.Services.AddOpenTelemetry().UseAzureMonitor(options => options.ConnectionString = connectionString);
+    if (connectionString != null)
+        builder.Services.AddOpenTelemetry().UseAzureMonitor(options => options.ConnectionString = connectionString);
 
     var app = builder.Build();
 

@@ -43,6 +43,8 @@ public static class ServiceCollectionExtensions
         services.Configure<BlobStorageSettings>(configuration.GetSection("BlobStorage"));
         services.AddScoped<IBlobStorageService, BlobStorageService>();
 
+        services.AddSingleton<TokenProvider>();
+
         services.AddAuthorizationBuilder()
             .AddPolicy(PolicyNames.HasNationality,
                 builder => builder.RequireClaim(AppClaimTypes.Nationality, "USA", "RSA"))
