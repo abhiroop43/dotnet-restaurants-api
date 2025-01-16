@@ -3,18 +3,19 @@ using System.Text;
 using Microsoft.Extensions.Configuration;
 using Microsoft.IdentityModel.JsonWebTokens;
 using Microsoft.IdentityModel.Tokens;
+using Restaurants.Application.Users.Dtos;
 using Restaurants.Domain.Entities;
 
 namespace Restaurants.Infrastructure.Authorization;
 
 public class TokenProvider(IConfiguration configuration)
 {
-    public string Create(User user)
+    public LoginResponse Create(User user)
     {
         var secretKey = Environment.GetEnvironmentVariable("JWT_SECRET")!;
         var securityKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(secretKey));
 
-        var credentials = new SigningCredentials(securityKey, SecurityAlgorithms.HmacSha512);
+        var credentials = new SigningCredentials(securityKey, SecurityAlgorithms.HmacSha384);
 
         var tokenDescriptor = new SecurityTokenDescriptor
         {
@@ -22,7 +23,7 @@ public class TokenProvider(IConfiguration configuration)
             [
                 new Claim(JwtRegisteredClaimNames.Sub, user.Id),
                 new Claim(JwtRegisteredClaimNames.Email, user.Email!),
-                new Claim("DateofBirth", user.DateOfBirth.ToString()!)
+                new Claim("DateOfBirth", user.DateOfBirth.ToString()!)
             ]),
             Expires = DateTime.Now.AddMinutes(configuration.GetValue<int>("Jwt:ExpirationTimeInMinutes")),
             SigningCredentials = credentials,
@@ -33,6 +34,10 @@ public class TokenProvider(IConfiguration configuration)
         var handler = new JsonWebTokenHandler();
         var token = handler.CreateToken(tokenDescriptor);
 
-        return token;
+        return new LoginResponse
+        {
+            Token = token,
+            Expires = new DateTimeOffset(tokenDescriptor.Expires.Value).ToUnixTimeSeconds()
+        };
     }
 }

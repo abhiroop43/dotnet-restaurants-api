@@ -3,7 +3,6 @@ using DotNetEnv;
 using Restaurants.API.Extensions;
 using Restaurants.API.Middlewares;
 using Restaurants.Application.Extensions;
-using Restaurants.Domain.Entities;
 using Restaurants.Infrastructure.Extensions;
 using Restaurants.Infrastructure.Seeders;
 using Serilog;
@@ -42,9 +41,9 @@ try
 
     app.UseHttpsRedirection();
 
-    app.MapGroup("api/identity")
-        .WithTags("Identity")
-        .MapIdentityApi<User>();
+    // app.MapGroup("api/identity")
+    //     .WithTags("Identity")
+    //     .MapIdentityApi<User>();
 
     app.UseAuthorization();
 
