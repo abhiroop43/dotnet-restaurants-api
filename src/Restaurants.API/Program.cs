@@ -3,7 +3,6 @@ using DotNetEnv;
 using Restaurants.API.Extensions;
 using Restaurants.API.Middlewares;
 using Restaurants.Application.Extensions;
-using Restaurants.Domain.Entities;
 using Restaurants.Infrastructure.Extensions;
 using Restaurants.Infrastructure.Seeders;
 using Serilog;
@@ -20,7 +19,8 @@ try
     Env.Load();
 
     var connectionString = Environment.GetEnvironmentVariable("APPLICATIONINSIGHTS_CONNECTION_STRING");
-    builder.Services.AddOpenTelemetry().UseAzureMonitor(options => options.ConnectionString = connectionString);
+    if (connectionString != null)
+        builder.Services.AddOpenTelemetry().UseAzureMonitor(options => options.ConnectionString = connectionString);
 
     var app = builder.Build();
 
@@ -41,9 +41,9 @@ try
 
     app.UseHttpsRedirection();
 
-    app.MapGroup("api/identity")
-        .WithTags("Identity")
-        .MapIdentityApi<User>();
+    // app.MapGroup("api/identity")
+    //     .WithTags("Identity")
+    //     .MapIdentityApi<User>();
 
     app.UseAuthorization();
 
