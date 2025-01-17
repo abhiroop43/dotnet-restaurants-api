@@ -1,3 +1,4 @@
+using AutoMapper;
 using MediatR;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
@@ -18,6 +19,7 @@ public class IdentityController(
     IMediator mediator,
     UserManager<User> userManager,
     SignInManager<User> signInManager,
+    IMapper mapper,
     TokenProvider tokenProvider) : ControllerBase
 {
     [HttpPatch("user")]
@@ -63,7 +65,7 @@ public class IdentityController(
         if (request.Password != request.ConfirmPassword)
             return BadRequest("Password and Confirm Password does not match.");
 
-        var user = new User { UserName = request.Email, Email = request.Email };
+        var user = mapper.Map<User>(request);
         var result = await userManager.CreateAsync(user, request.Password);
 
         if (!result.Succeeded) return BadRequest(result.Errors);
