@@ -16,6 +16,8 @@ public class TokenProvider(IConfiguration configuration)
         var securityKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(secretKey));
 
         var credentials = new SigningCredentials(securityKey, SecurityAlgorithms.HmacSha384);
+        var expiry =
+            new DateTimeOffset(DateTime.Now.AddMinutes(configuration.GetValue<int>("Jwt:ExpirationTimeInMinutes")));
 
         var tokenDescriptor = new SecurityTokenDescriptor
         {
@@ -25,7 +27,8 @@ public class TokenProvider(IConfiguration configuration)
                 new Claim(JwtRegisteredClaimNames.Email, user.Email!),
                 new Claim("DateOfBirth", user.DateOfBirth.ToString()!)
             ]),
-            Expires = DateTime.Now.AddMinutes(configuration.GetValue<int>("Jwt:ExpirationTimeInMinutes")),
+            // Expires = DateTime.Now.AddMinutes(configuration.GetValue<int>("Jwt:ExpirationTimeInMinutes")),
+            Expires = expiry.DateTime,
             SigningCredentials = credentials,
             Issuer = configuration.GetValue<string>("Jwt:Issuer"),
             Audience = configuration.GetValue<string>("Jwt:Audience")
@@ -37,7 +40,7 @@ public class TokenProvider(IConfiguration configuration)
         return new LoginResponse
         {
             Token = token,
-            Expires = new DateTimeOffset(tokenDescriptor.Expires.Value).ToUnixTimeSeconds()
+            Expires = expiry.DateTime
         };
     }
 }
