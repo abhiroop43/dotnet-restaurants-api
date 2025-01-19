@@ -45,3 +45,5 @@ msbuild.log
 msbuild.err
 msbuild.wrn
 src/Restaurants.API/.env
+.env
+

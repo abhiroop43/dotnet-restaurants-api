@@ -9,55 +9,56 @@ using Serilog;
 
 try
 {
-    var builder = WebApplication.CreateBuilder(args);
+  var builder = WebApplication.CreateBuilder(args);
 
-    // Add services to the container.
-    builder.AddPresentation();
-    builder.Services.AddApplication();
-    builder.Services.AddInfrastructure(builder.Configuration);
+  // Add services to the container.
+  builder.AddPresentation();
+  builder.Services.AddApplication();
+  builder.Services.AddInfrastructure(builder.Configuration);
 
-    Env.Load();
+  Env.Load();
 
-    var connectionString = Environment.GetEnvironmentVariable("APPLICATIONINSIGHTS_CONNECTION_STRING");
-    if (connectionString != null)
-        builder.Services.AddOpenTelemetry().UseAzureMonitor(options => options.ConnectionString = connectionString);
+  var connectionString = Environment.GetEnvironmentVariable("APPLICATIONINSIGHTS_CONNECTION_STRING");
+  if (connectionString != null)
+    builder.Services.AddOpenTelemetry().UseAzureMonitor(options => options.ConnectionString = connectionString);
 
-    var app = builder.Build();
+  var app = builder.Build();
 
-    var scope = app.Services.CreateScope();
-    var seeder = scope.ServiceProvider.GetRequiredService<IRestaurantSeeder>();
-    await seeder.Seed();
+  var scope = app.Services.CreateScope();
+  var seeder = scope.ServiceProvider.GetRequiredService<IRestaurantSeeder>();
+  await seeder.Seed();
 
-    // Configure the HTTP request pipeline.
-    app.UseMiddleware<ErrorHandlingMiddleware>();
-    app.UseMiddleware<RequestTimeMiddleware>();
-    app.UseSerilogRequestLogging();
+  // Configure the HTTP request pipeline.
+  app.UseMiddleware<ErrorHandlingMiddleware>();
+  app.UseMiddleware<RequestTimeMiddleware>();
+  app.UseSerilogRequestLogging();
 
-    if (app.Environment.IsDevelopment())
-    {
-        app.UseSwagger();
-        app.UseSwaggerUI();
-    }
+  if (app.Environment.IsDevelopment())
+  {
+    app.UseSwagger();
+    app.UseSwaggerUI();
+  }
 
-    app.UseHttpsRedirection();
+  app.UseHttpsRedirection();
 
-    // app.MapGroup("api/identity")
-    //     .WithTags("Identity")
-    //     .MapIdentityApi<User>();
+  // app.MapGroup("api/identity")
+  //     .WithTags("Identity")
+  //     .MapIdentityApi<User>();
 
-    app.UseAuthorization();
+  app.UseAuthentication();
+  app.UseAuthorization();
 
-    app.MapControllers();
+  app.MapControllers();
 
-    app.Run();
+  app.Run();
 }
 catch (Exception e)
 {
-    Log.Fatal(e, "Application startup failed");
+  Log.Fatal(e, "Application startup failed");
 }
 finally
 {
-    Log.CloseAndFlush();
+  Log.CloseAndFlush();
 }
 
 

@@ -1,8 +1,11 @@
+using System.Text;
+using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
+using Microsoft.IdentityModel.Tokens;
 using Restaurants.Domain.Entities;
 using Restaurants.Domain.Interfaces;
 using Restaurants.Domain.Repositories;
@@ -20,36 +23,60 @@ namespace Restaurants.Infrastructure.Extensions;
 
 public static class ServiceCollectionExtensions
 {
-    public static void AddInfrastructure(this IServiceCollection services, IConfiguration configuration)
-    {
-        var connectionString = configuration.GetConnectionString("Dev");
-        services.AddDbContext<RestaurantsDbContext>(options =>
-            options
-                .UseSqlServer(connectionString)
-                .EnableSensitiveDataLogging());
+  public static void AddInfrastructure(this IServiceCollection services, IConfiguration configuration)
+  {
+    var connectionString = configuration.GetConnectionString("Dev");
+    services.AddDbContext<RestaurantsDbContext>(options =>
+        options
+            .UseSqlServer(connectionString)
+            .EnableSensitiveDataLogging());
 
-        services.AddIdentityApiEndpoints<User>()
-            .AddRoles<IdentityRole>()
-            .AddClaimsPrincipalFactory<RestaurantUserClaimsPrincipalFactory>()
-            .AddEntityFrameworkStores<RestaurantsDbContext>();
+    services
+        .AddIdentity<User, IdentityRole>()
+        // .AddIdentityApiEndpoints<User>()
+        // .AddRoles<IdentityRole>()
+        .AddClaimsPrincipalFactory<RestaurantUserClaimsPrincipalFactory>()
+        .AddEntityFrameworkStores<RestaurantsDbContext>();
 
-        services.AddScoped<IRestaurantSeeder, RestaurantSeeder>();
-        services.AddScoped<IRestaurantsRepository, RestaurantsRepository>();
-        services.AddScoped<IDishesRepository, DishesRepository>();
-        services.AddScoped<IAuthorizationHandler, MinimumAgeRequirementHandler>();
-        services.AddScoped<IAuthorizationHandler, MinimumRestaurantsRequirementHandler>();
-        services.AddScoped<IRestaurantAuthorizationService, RestaurantAuthorizationService>();
+    services.AddScoped<IRestaurantSeeder, RestaurantSeeder>();
+    services.AddScoped<IRestaurantsRepository, RestaurantsRepository>();
+    services.AddScoped<IDishesRepository, DishesRepository>();
+    services.AddScoped<IAuthorizationHandler, MinimumAgeRequirementHandler>();
+    services.AddScoped<IAuthorizationHandler, MinimumRestaurantsRequirementHandler>();
+    services.AddScoped<IRestaurantAuthorizationService, RestaurantAuthorizationService>();
 
-        services.Configure<BlobStorageSettings>(configuration.GetSection("BlobStorage"));
-        services.AddScoped<IBlobStorageService, BlobStorageService>();
+    services.Configure<BlobStorageSettings>(configuration.GetSection("BlobStorage"));
+    services.AddScoped<IBlobStorageService, BlobStorageService>();
 
-        services.AddSingleton<TokenProvider>();
+    services.AddSingleton<TokenProvider>();
 
-        services.AddAuthorizationBuilder()
-            .AddPolicy(PolicyNames.HasNationality,
-                builder => builder.RequireClaim(AppClaimTypes.Nationality, "USA", "RSA"))
-            .AddPolicy(PolicyNames.AtLeast20, builder => builder.AddRequirements(new MinimumAgeRequirement(20)))
-            .AddPolicy(PolicyNames.AtLeast2RestaurantsCreated,
-                builder => builder.AddRequirements(new MinimumRestaurantsRequirement(2)));
-    }
+    services.AddAuthorizationBuilder()
+        .AddPolicy(PolicyNames.HasNationality,
+            builder => builder.RequireClaim(AppClaimTypes.Nationality, "USA", "RSA"))
+        .AddPolicy(PolicyNames.AtLeast20, builder => builder.AddRequirements(new MinimumAgeRequirement(20)))
+        .AddPolicy(PolicyNames.AtLeast2RestaurantsCreated,
+            builder => builder.AddRequirements(new MinimumRestaurantsRequirement(2)));
+
+    var secretKey = configuration.GetValue<string>("Jwt:Secret")!;
+
+    services.AddAuthentication(options =>
+        {
+          options.DefaultAuthenticateScheme = JwtBearerDefaults.AuthenticationScheme;
+        })
+        .AddJwtBearer(options =>
+        {
+          options.RequireHttpsMetadata = false;
+          options.TokenValidationParameters = new TokenValidationParameters
+          {
+            ValidateIssuer = true,
+            ValidIssuer = configuration.GetValue<string>("Jwt:Issuer"),
+            ValidateAudience = true,
+            ValidAudience = configuration.GetValue<string>("Jwt:Audience"),
+            ValidateLifetime = true,
+            IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(secretKey)),
+            ValidateIssuerSigningKey = true,
+            ClockSkew = TimeSpan.Zero
+          };
+        });
+  }
 }
