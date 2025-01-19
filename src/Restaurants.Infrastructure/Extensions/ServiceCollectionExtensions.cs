@@ -1,6 +1,7 @@
 using System.Text;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Authorization;
+/*using Microsoft.AspNetCore.Http;*/
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
@@ -78,5 +79,24 @@ public static class ServiceCollectionExtensions
             ClockSkew = TimeSpan.Zero
           };
         });
+    /*.AddCookie(*/
+    /*    options =>*/
+    /*    {*/
+    /*      options.Events.OnRedirectToLogin = context =>*/
+    /*      {*/
+    /*        context.Response.StatusCode = StatusCodes.Status401Unauthorized;*/
+    /*        return Task.CompletedTask;*/
+    /*      };*/
+    /**/
+    /*      options.Events.OnRedirectToAccessDenied = context =>*/
+    /*      {*/
+    /*        context.Response.StatusCode = StatusCodes.Status403Forbidden;*/
+    /*        return Task.CompletedTask;*/
+    /*      };*/
+    /**/
+    /**/
+    /*      options.LoginPath = string.Empty;*/
+    /*      options.AccessDeniedPath = string.Empty;*/
+    /*    });*/
   }
 }

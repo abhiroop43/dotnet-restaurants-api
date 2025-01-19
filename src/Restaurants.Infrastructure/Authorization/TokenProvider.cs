@@ -23,9 +23,10 @@ public class TokenProvider(IConfiguration configuration)
     {
       Subject = new ClaimsIdentity(
         [
-            new Claim(JwtRegisteredClaimNames.Sub, user.Id),
-                new Claim(JwtRegisteredClaimNames.Email, user.Email!),
-                new Claim("DateOfBirth", user.DateOfBirth.ToString()!)
+               new Claim(JwtRegisteredClaimNames.Sub, user.Id),
+               new Claim(JwtRegisteredClaimNames.Email, user.Email!),
+               new Claim("DateOfBirth", user.DateOfBirth.ToString()!)
+                // TODO: add roles as claims
         ]),
       // Expires = DateTime.Now.AddMinutes(configuration.GetValue<int>("Jwt:ExpirationTimeInMinutes")),
       Expires = expiry.DateTime,
