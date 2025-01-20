@@ -10,7 +10,7 @@ namespace Restaurants.Infrastructure.Authorization;
 
 public class TokenProvider(IConfiguration configuration)
 {
-  public LoginResponse Create(User user)
+  public LoginResponse Create(User user, IList<string> roles)
   {
     var secretKey = configuration.GetValue<string>("Jwt:Secret")!;
     var securityKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(secretKey));
@@ -19,16 +19,26 @@ public class TokenProvider(IConfiguration configuration)
     var expiry =
         new DateTimeOffset(DateTime.Now.AddMinutes(configuration.GetValue<int>("Jwt:ExpirationTimeInMinutes")));
 
+    List<Claim> claims = new List<Claim>()
+    {
+      new Claim(JwtRegisteredClaimNames.Sub, user.Id),
+      new Claim(JwtRegisteredClaimNames.Email, user.Email!),
+    };
+
+    if (user.DateOfBirth != null)
+    {
+      claims.Add(new Claim("DateOfBirth", user.DateOfBirth.ToString()!));
+    }
+
+    if (!string.IsNullOrEmpty(user.Nationality))
+    {
+      claims.Add(new Claim("Nationality", user.Nationality!));
+    }
+
+    claims.AddRange(roles.Select(role => new Claim(ClaimTypes.Role, role)));
     var tokenDescriptor = new SecurityTokenDescriptor
     {
-      Subject = new ClaimsIdentity(
-        [
-               new Claim(JwtRegisteredClaimNames.Sub, user.Id),
-               new Claim(JwtRegisteredClaimNames.Email, user.Email!),
-               new Claim("DateOfBirth", user.DateOfBirth.ToString()!)
-                // TODO: add roles as claims
-        ]),
-      // Expires = DateTime.Now.AddMinutes(configuration.GetValue<int>("Jwt:ExpirationTimeInMinutes")),
+      Subject = new ClaimsIdentity(claims),
       Expires = expiry.DateTime,
       SigningCredentials = credentials,
       Issuer = configuration.GetValue<string>("Jwt:Issuer"),

@@ -34,8 +34,6 @@ public static class ServiceCollectionExtensions
 
     services
         .AddIdentity<User, IdentityRole>()
-        // .AddIdentityApiEndpoints<User>()
-        // .AddRoles<IdentityRole>()
         .AddClaimsPrincipalFactory<RestaurantUserClaimsPrincipalFactory>()
         .AddEntityFrameworkStores<RestaurantsDbContext>();
 
@@ -79,24 +77,5 @@ public static class ServiceCollectionExtensions
             ClockSkew = TimeSpan.Zero
           };
         });
-    /*.AddCookie(*/
-    /*    options =>*/
-    /*    {*/
-    /*      options.Events.OnRedirectToLogin = context =>*/
-    /*      {*/
-    /*        context.Response.StatusCode = StatusCodes.Status401Unauthorized;*/
-    /*        return Task.CompletedTask;*/
-    /*      };*/
-    /**/
-    /*      options.Events.OnRedirectToAccessDenied = context =>*/
-    /*      {*/
-    /*        context.Response.StatusCode = StatusCodes.Status403Forbidden;*/
-    /*        return Task.CompletedTask;*/
-    /*      };*/
-    /**/
-    /**/
-    /*      options.LoginPath = string.Empty;*/
-    /*      options.AccessDeniedPath = string.Empty;*/
-    /*    });*/
   }
 }

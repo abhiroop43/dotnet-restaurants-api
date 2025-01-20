@@ -56,7 +56,8 @@ public class IdentityController(
     var result = await signInManager.CheckPasswordSignInAsync(user, request.Password, false);
     if (!result.Succeeded) return Unauthorized();
 
-    var loginResponse = tokenProvider.Create(user);
+    var roles = await userManager.GetRolesAsync(user);
+    var loginResponse = tokenProvider.Create(user, roles);
     return Ok(loginResponse);
   }
 
@@ -71,7 +72,8 @@ public class IdentityController(
 
     if (!result.Succeeded) return BadRequest(result.Errors);
 
-    var loginResponse = tokenProvider.Create(user);
+    var roles = await userManager.GetRolesAsync(user);
+    var loginResponse = tokenProvider.Create(user, roles);
     return Ok(loginResponse);
   }
 }
