@@ -1,4 +1,5 @@
 using System.Security.Claims;
+using System.Security.Cryptography;
 using System.Text;
 using Microsoft.Extensions.Configuration;
 using Microsoft.IdentityModel.JsonWebTokens;
@@ -53,5 +54,13 @@ public class TokenProvider(IConfiguration configuration)
       Token = token,
       Expires = expiry.DateTime
     };
+  }
+
+  public string GenerateRefreshToken()
+  {
+    var randomNumber = new byte[32];
+    using var rng = RandomNumberGenerator.Create();
+    rng.GetBytes(randomNumber);
+    return Convert.ToBase64String(randomNumber);
   }
 }
