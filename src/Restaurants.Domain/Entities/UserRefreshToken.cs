@@ -4,5 +4,5 @@ public class UserRefreshToken
   public string RefreshToken { get; set; } = default!;
   public DateTime RefreshTokenExpiry { get; set; }
   public string UserId { get; set; } = default!;
-
+  public DateTime CreatedAt { get; set; }
 }
