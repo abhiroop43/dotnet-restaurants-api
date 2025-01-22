@@ -76,4 +76,19 @@ public class IdentityController(
     var loginResponse = tokenProvider.Create(user, roles);
     return Ok(loginResponse);
   }
+
+  [HttpPost("refresh")]
+  public async Task<IActionResult> Refresh([FromBody] RefreshTokenRequest request)
+  {
+    var user = await userManager.FindByEmailAsync(request.Email);
+    if (user == null) return Unauthorized();
+
+    var isValid = tokenProvider.ValidateRefreshToken(user.Id, request.RefreshToken);
+
+    if (!isValid) return Unauthorized();
+
+    var roles = await userManager.GetRolesAsync(user);
+    var loginResponse = tokenProvider.Create(user, roles);
+    return Ok(loginResponse);
+  }
 }

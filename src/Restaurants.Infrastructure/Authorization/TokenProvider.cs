@@ -95,6 +95,11 @@ public class TokenProvider(IConfiguration configuration, ITokenRepository tokenR
       return false;
     }
 
+    if(storedToken.UserId != userId)
+    {
+      return false;
+    }
+
     return true;
   }
 
