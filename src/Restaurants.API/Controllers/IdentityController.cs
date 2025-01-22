@@ -57,7 +57,7 @@ public class IdentityController(
     if (!result.Succeeded) return Unauthorized();
 
     var roles = await userManager.GetRolesAsync(user);
-    var loginResponse = tokenProvider.Create(user, roles);
+    var loginResponse = await tokenProvider.Create(user, roles);
     return Ok(loginResponse);
   }
 
@@ -73,7 +73,7 @@ public class IdentityController(
     if (!result.Succeeded) return BadRequest(result.Errors);
 
     var roles = await userManager.GetRolesAsync(user);
-    var loginResponse = tokenProvider.Create(user, roles);
+    var loginResponse = await tokenProvider.Create(user, roles);
     return Ok(loginResponse);
   }
 
@@ -88,7 +88,7 @@ public class IdentityController(
     if (!isValid) return Unauthorized();
 
     var roles = await userManager.GetRolesAsync(user);
-    var loginResponse = tokenProvider.Create(user, roles);
+    var loginResponse = await tokenProvider.Create(user, roles);
     return Ok(loginResponse);
   }
 }

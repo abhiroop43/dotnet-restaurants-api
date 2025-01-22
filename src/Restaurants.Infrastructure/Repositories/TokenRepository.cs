@@ -14,7 +14,7 @@ internal class TokenRepository(RestaurantsDbContext dbContext) : ITokenRepositor
     return userRefreshToken;
   }
 
-  public bool DeleteRefreshTokenForUserAsync(string userId)
+  public bool DeleteRefreshTokenForUser(string userId)
   {
     dbContext.UserRefreshTokens.RemoveRange(
       dbContext.UserRefreshTokens.Where(t => t.UserId == userId));

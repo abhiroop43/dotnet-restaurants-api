@@ -1,7 +1,6 @@
 using System.Text;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Authorization;
-/*using Microsoft.AspNetCore.Http;*/
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
@@ -40,6 +39,7 @@ public static class ServiceCollectionExtensions
     services.AddScoped<IRestaurantSeeder, RestaurantSeeder>();
     services.AddScoped<IRestaurantsRepository, RestaurantsRepository>();
     services.AddScoped<IDishesRepository, DishesRepository>();
+    services.AddScoped<ITokenRepository, TokenRepository>();
     services.AddScoped<IAuthorizationHandler, MinimumAgeRequirementHandler>();
     services.AddScoped<IAuthorizationHandler, MinimumRestaurantsRequirementHandler>();
     services.AddScoped<IRestaurantAuthorizationService, RestaurantAuthorizationService>();
@@ -47,7 +47,7 @@ public static class ServiceCollectionExtensions
     services.Configure<BlobStorageSettings>(configuration.GetSection("BlobStorage"));
     services.AddScoped<IBlobStorageService, BlobStorageService>();
 
-    services.AddSingleton<TokenProvider>();
+    services.AddScoped<TokenProvider>();
 
     services.AddAuthorizationBuilder()
         .AddPolicy(PolicyNames.HasNationality,

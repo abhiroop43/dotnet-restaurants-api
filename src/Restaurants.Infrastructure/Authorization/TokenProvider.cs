@@ -12,7 +12,7 @@ namespace Restaurants.Infrastructure.Authorization;
 
 public class TokenProvider(IConfiguration configuration, ITokenRepository tokenRepository)
 {
-  public LoginResponse Create(User user, IList<string> roles)
+  public async Task<LoginResponse> Create(User user, IList<string> roles)
   {
     var secretKey = configuration.GetValue<string>("Jwt:Secret")!;
     var securityKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(secretKey));
@@ -52,12 +52,15 @@ public class TokenProvider(IConfiguration configuration, ITokenRepository tokenR
     var refreshToken = GenerateRefreshToken();
     var refreshTokenExpires = DateTime.Now.AddDays(configuration.GetValue<int>("Jwt:RefreshTokenValidityInDays"));
 
-    tokenRepository.AddRefreshTokenAsync(new UserRefreshToken
+    tokenRepository.DeleteRefreshTokenForUser(user.Id);
+    await tokenRepository.AddRefreshTokenAsync(new UserRefreshToken
     {
       UserId = user.Id,
       RefreshToken = refreshToken,
       RefreshTokenExpiry = refreshTokenExpires
     });
+
+    await tokenRepository.SaveChangesAsync();
 
     return new LoginResponse
     {
@@ -95,7 +98,7 @@ public class TokenProvider(IConfiguration configuration, ITokenRepository tokenR
       return false;
     }
 
-    if(storedToken.UserId != userId)
+    if (storedToken.UserId != userId)
     {
       return false;
     }
